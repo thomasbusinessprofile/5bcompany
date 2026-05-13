@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { NavLink } from "./shared/NavLink";
+import { WhatsAppButton } from "./shared/WhatsAppButton";
 import { company } from "./shared/company";
 import { getSiteUrl } from "./shared/site";
 import { createSupabaseServerClient } from "./lib/supabase/server";
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
 const navItems = [
   { href: "/products", label: "Products" },
   { href: "/about", label: "Our Story" },
-  { href: "/export-process", label: "Process" },
+  { href: "/sustainability", label: "Sustainability" },
   { href: "/articles", label: "Insights" },
   { href: "/request-quote", label: "Sourcing" }
 ];
@@ -102,6 +103,7 @@ export default async function RootLayout({
           </div>
         </header>
         <main>{children}</main>
+        <WhatsAppButton />
         <footer className="site-footer">
           <div>
             <Link className="brand footer-brand" href="/">

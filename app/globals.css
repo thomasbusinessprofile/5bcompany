@@ -895,6 +895,43 @@ main {
   color: #fff;
 }
 
+/* ───── WhatsApp FAB ───── */
+.whatsapp-fab {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  background: #25d366;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(37, 211, 102, 0.45);
+  transition: var(--transition);
+}
+.whatsapp-fab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(37, 211, 102, 0.55);
+}
+.whatsapp-fab span[aria-hidden] {
+  font-size: 18px;
+}
+@media (max-width: 480px) {
+  .whatsapp-fab {
+    right: 12px;
+    bottom: 12px;
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+  .whatsapp-fab-label {
+    display: none;
+  }
+}
+
 /* ───── Landing story sections ───── */
 .trust-strip {
   margin-top: 28px;
