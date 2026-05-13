@@ -3,6 +3,9 @@ import { notFound } from "next/navigation";
 import { sendBuyerMessage, uploadBuyerAttachment } from "./actions";
 import { getBuyerSourcingRequestById } from "../../../shared/buyer-data";
 import { getSentQuotationsForRequest } from "../../../shared/quotation-data";
+import { CharCounterTextarea } from "../../../shared/CharCounterTextarea";
+import { SubmitButton } from "../../../shared/SubmitButton";
+import { ATTACHMENT_ACCEPT, MAX_FILE_SIZE_LABEL, MAX_MESSAGE_LENGTH } from "../../../lib/constants";
 
 type BuyerRequestDetailPageProps = {
   params: Promise<{ id: string }>;
@@ -164,11 +167,14 @@ export default async function BuyerRequestDetailPage({
             <input name="request_id" type="hidden" value={request.id} />
             <label>
               Reply
-              <textarea maxLength={2000} name="message" placeholder="Type your reply to admin..." required />
+              <CharCounterTextarea
+                maxLength={MAX_MESSAGE_LENGTH}
+                name="message"
+                placeholder="Type your reply to admin..."
+                required
+              />
             </label>
-            <button className="primary-link" type="submit">
-              Send message
-            </button>
+            <SubmitButton pendingLabel="Sending...">Send message</SubmitButton>
           </form>
         </div>
         <aside className="page-card">
@@ -187,7 +193,7 @@ export default async function BuyerRequestDetailPage({
             <label>
               Upload attachment
               <input
-                accept=".pdf,.docx,.xlsx,image/png,image/jpeg,image/webp"
+                accept={ATTACHMENT_ACCEPT}
                 aria-describedby="attachment-hint"
                 name="attachment"
                 required
@@ -195,11 +201,9 @@ export default async function BuyerRequestDetailPage({
               />
             </label>
             <p className="form-note" id="attachment-hint">
-              PDF, DOCX, XLSX, PNG, JPG, or WEBP. Maximum file size 10 MB.
+              PDF, DOCX, XLSX, PNG, JPG, or WEBP. Maximum file size {MAX_FILE_SIZE_LABEL}.
             </p>
-            <button className="primary-link" type="submit">
-              Upload file
-            </button>
+            <SubmitButton pendingLabel="Uploading...">Upload file</SubmitButton>
           </form>
           <div className="cta-row">
             <Link className="secondary-link" href="/buyer/requests">

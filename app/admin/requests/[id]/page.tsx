@@ -7,6 +7,9 @@ import {
   updateRequestStatus
 } from "./actions";
 import { getAdminSourcingRequestById } from "../../../shared/admin-data";
+import { CharCounterTextarea } from "../../../shared/CharCounterTextarea";
+import { SubmitButton } from "../../../shared/SubmitButton";
+import { MAX_MESSAGE_LENGTH } from "../../../lib/constants";
 
 const statusOptions = [
   "new",
@@ -206,7 +209,11 @@ export default async function AdminRequestDetailPage({
                 <article className={`message-bubble ${item.tone}`} key={item.id}>
                   <strong>{item.author}</strong>
                   <p>{item.body}</p>
-                  {item.internal ? <small>Internal only</small> : null}
+                  {item.internal ? (
+                    <p className="admin-internal-warning" role="note">
+                      Internal only — not visible to the buyer.
+                    </p>
+                  ) : null}
                 </article>
               ))
             ) : (
@@ -217,15 +224,18 @@ export default async function AdminRequestDetailPage({
             <input name="request_id" type="hidden" value={request.id} />
             <label>
               Message
-              <textarea maxLength={2000} name="message" placeholder="Ask buyer for missing details or add an internal note..." required />
+              <CharCounterTextarea
+                maxLength={MAX_MESSAGE_LENGTH}
+                name="message"
+                placeholder="Ask buyer for missing details or add an internal note..."
+                required
+              />
             </label>
             <label className="checkbox-label">
               <input name="is_internal" type="checkbox" />
-              Internal note only
+              Internal note only (hidden from buyer)
             </label>
-            <button className="primary-link" type="submit">
-              Save message
-            </button>
+            <SubmitButton pendingLabel="Saving...">Save message</SubmitButton>
           </form>
         </div>
         <aside className="page-card">

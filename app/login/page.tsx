@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { login } from "./actions";
+import { SubmitButton } from "../shared/SubmitButton";
 
 export const metadata = {
   title: "Login | 5B Trading",
@@ -68,9 +69,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
             Password
             <input autoComplete="current-password" name="password" placeholder="Enter your password" required type="password" />
           </label>
-          <button aria-describedby="login-submit-note" className="primary-link" type="submit">
-            Login
-          </button>
+          <SubmitButton pendingLabel="Signing in...">Login</SubmitButton>
           <p className="form-note" id="login-submit-note">
             Buyer, admin, sales, sourcing, and viewer roles are enforced through
             Supabase profiles and RLS.

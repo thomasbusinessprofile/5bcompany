@@ -3,16 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "../../lib/supabase/server";
-
-const businessTypes = new Set([
-  "importer",
-  "distributor",
-  "wholesaler",
-  "retailer",
-  "manufacturer",
-  "sourcing_agent",
-  "other"
-]);
+import { BUSINESS_TYPE_VALUES as businessTypes } from "../../lib/constants";
 
 function value(formData: FormData, key: string) {
   const item = formData.get(key);

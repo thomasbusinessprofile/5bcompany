@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { NavLink } from "./shared/NavLink";
 import { company } from "./shared/company";
 import { getSiteUrl } from "./shared/site";
 import "./globals.css";
@@ -48,9 +49,9 @@ export default function RootLayout({
           </Link>
           <nav className="site-nav" aria-label="Primary navigation">
             {navItems.map((item) => (
-              <Link key={item.href} href={item.href}>
+              <NavLink key={item.href} href={item.href}>
                 {item.label}
-              </Link>
+              </NavLink>
             ))}
           </nav>
           <div className="header-actions">
