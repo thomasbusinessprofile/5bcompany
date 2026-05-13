@@ -3,7 +3,11 @@ import Link from "next/link";
 import { NavLink } from "./shared/NavLink";
 import { company } from "./shared/company";
 import { getSiteUrl } from "./shared/site";
+import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
+
+const inter = Inter({ subsets: ["latin", "vietnamese"], variable: "--font-inter" });
+const outfit = Outfit({ subsets: ["latin", "vietnamese"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
   alternates: {
@@ -37,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi">
+    <html lang="vi" className={`${inter.variable} ${outfit.variable}`}>
       <body>
         <header className="site-header">
           <Link className="brand" href="/" aria-label={`${company.shortName} home`}>

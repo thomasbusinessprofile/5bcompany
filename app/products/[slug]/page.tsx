@@ -76,6 +76,9 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
             </Link>
           </div>
         </div>
+        <div className="product-hero-image page-card">
+          {product.image && <img alt={product.name} src={product.image} />}
+        </div>
         <aside className="page-card request-checklist">
           <h2>Buyer inputs before quotation</h2>
           <ul className="check-list">
@@ -164,14 +167,24 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
           <div className="card-grid">
             {relatedProducts.map((related) => (
               <Link className="product-card" href={`/products/${related.slug}`} key={related.slug}>
-                <h3>{related.name}</h3>
-                <p>{related.summary}</p>
-                <div className="tag-row">
-                  {related.tags.slice(0, 3).map((tag) => (
-                    <span className="tag" key={tag}>
-                      {tag}
-                    </span>
-                  ))}
+                {related.image && (
+                  <div className="product-card-image">
+                    <img alt={related.name} src={related.image} />
+                  </div>
+                )}
+                <div className="product-card-content">
+                  <p className="card-kicker">
+                    {getCategoryNameFromList(categories, related.category)}
+                  </p>
+                  <h3>{related.name}</h3>
+                  <p>{related.summary}</p>
+                  <div className="tag-row">
+                    {related.tags.slice(0, 3).map((tag) => (
+                      <span className="tag" key={tag}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </Link>
             ))}

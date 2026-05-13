@@ -56,8 +56,15 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
       <section className="category-summary-grid" aria-label="Product category summaries">
         {categories.map((item) => (
           <article className="summary-tile" key={item.slug}>
-            <h2>{item.name}</h2>
-            <p>{item.description}</p>
+            {item.image && (
+              <div className="summary-tile-image">
+                <img alt={item.name} src={item.image} />
+              </div>
+            )}
+            <div className="summary-tile-content">
+              <h2>{item.name}</h2>
+              <p>{item.description}</p>
+            </div>
           </article>
         ))}
       </section>
@@ -66,41 +73,49 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         {visibleProducts.length > 0 ? (
           visibleProducts.map((product) => (
             <article className="product-card catalogue-card" key={product.slug}>
-              <div>
+              {product.image && (
+                <div className="product-card-image">
+                  <img alt={product.name} src={product.image} />
+                </div>
+              )}
+              <div className="product-card-content">
                 <p className="card-kicker">
                   {categories.find((item) => item.slug === product.category)?.name}
                 </p>
                 <h2>{product.name}</h2>
                 <p>{product.summary}</p>
-              </div>
-              <dl className="mini-specs">
-                <div>
-                  <dt>Specs</dt>
-                  <dd>{product.specs.slice(0, 2).join(" / ")}</dd>
+                
+                <dl className="mini-specs">
+                  <div>
+                    <dt>Specs</dt>
+                    <dd>{product.specs.slice(0, 2).join(" / ")}</dd>
+                  </div>
+                  <div>
+                    <dt>Packing</dt>
+                    <dd>{product.packingOptions.slice(0, 2).join(" / ")}</dd>
+                  </div>
+                  <div>
+                    <dt>MOQ</dt>
+                    <dd>{product.moq}</dd>
+                  </div>
+                </dl>
+                
+                <div className="tag-row">
+                  {product.tags.map((tag) => (
+                    <span className="tag" key={tag}>
+                      {tag}
+                    </span>
+                  ))}
                 </div>
-                <div>
-                  <dt>Packing</dt>
-                  <dd>{product.packingOptions.slice(0, 2).join(" / ")}</dd>
+                
+                <div className="card-actions">
+                  <Link className="secondary-link" href={`/products/${product.slug}`}>
+                    View detail
+                  </Link>
+                  <Link className="primary-link" href={`/request-quote?product=${product.slug}`}>
+                    Create Request
+                  </Link>
                 </div>
-                <div>
-                  <dt>MOQ</dt>
-                  <dd>{product.moq}</dd>
-                </div>
-              </dl>
-              <div className="tag-row">
-                {product.tags.map((tag) => (
-                  <span className="tag" key={tag}>
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className="card-actions">
-                <Link className="secondary-link" href={`/products/${product.slug}`}>
-                  View detail
-                </Link>
-                <Link className="primary-link" href={`/request-quote?product=${product.slug}`}>
-                  Create Request
-                </Link>
               </div>
             </article>
           ))

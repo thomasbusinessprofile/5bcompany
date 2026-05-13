@@ -15,14 +15,17 @@ export default function HomePage() {
             structuring later, while admin keeps control of quotation and
             commercial commitments.
           </p>
-          <div className="cta-row">
-            <Link className="primary-link" href="/request-quote">
-              Create Request
-            </Link>
-            <Link className="secondary-link" href="/products">
-              View Products
-            </Link>
-          </div>
+           <div className="cta-row">
+             <Link className="primary-link" href="/request-quote">
+               Create Request
+             </Link>
+             <Link className="secondary-link" href="/products">
+               View Products
+             </Link>
+           </div>
+           <div className="hero-image-container">
+             <img alt="Vietnam export sourcing warehouse loading" src="/images/warehouse_loading.jpg" />
+           </div>
           <div className="metric-grid" aria-label="Platform highlights">
             <div className="metric">
               <strong>7+</strong>
@@ -69,14 +72,21 @@ export default function HomePage() {
         <div className="card-grid" aria-label="Featured product groups">
           {productGroups.slice(0, 4).map((group) => (
             <Link className="product-card" href={`/products/${group.slug}`} key={group.slug}>
-              <h3>{group.name}</h3>
-              <p>{group.summary}</p>
-              <div className="tag-row">
-                {group.tags.map((tag) => (
-                  <span className="tag" key={tag}>
-                    {tag}
-                  </span>
-                ))}
+              {group.image && (
+                <div className="product-card-image">
+                  <img alt={group.name} src={group.image} />
+                </div>
+              )}
+              <div className="product-card-content">
+                <h3>{group.name}</h3>
+                <p>{group.summary}</p>
+                <div className="tag-row">
+                  {group.tags.map((tag) => (
+                    <span className="tag" key={tag}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             </Link>
           ))}

@@ -62,6 +62,10 @@ function getProductCategorySlug(row: ProductRow) {
 function toProductGroup(row: ProductRow, relatedSlugs: string[]): ProductGroup {
   const specs = listFromJson(row.specifications);
   const packingOptions = listFromJson(row.packing_options);
+  
+  // Try to find a fallback image if the DB row doesn't have one
+  const fallback = fallbackProducts.find(p => p.slug === row.slug);
+  
   const product: ProductGroup = {
     applications: listFromJson(row.applications),
     category: getProductCategorySlug(row),
@@ -76,7 +80,8 @@ function toProductGroup(row: ProductRow, relatedSlugs: string[]): ProductGroup {
     slug: row.slug,
     specs,
     summary: row.short_description ?? row.long_description ?? "",
-    tags: []
+    tags: [],
+    image: fallback?.image // Assign image from fallback data
   };
 
   return {
@@ -120,11 +125,15 @@ export async function getCatalogueData(): Promise<{
     };
   }
 
-  const categories = (categoriesResult.data as ProductCategoryRow[]).map((category) => ({
-    description: category.description ?? "",
-    name: category.name,
-    slug: category.slug
-  }));
+  const categories = (categoriesResult.data as ProductCategoryRow[]).map((category) => {
+    const fallback = fallbackCategories.find(c => c.slug === category.slug);
+    return {
+      description: category.description ?? "",
+      name: category.name,
+      slug: category.slug,
+      image: fallback?.image
+    };
+  });
 
   const rows = productsResult.data as unknown as ProductRow[];
   const products = rows.map((row) => {

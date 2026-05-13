@@ -2,6 +2,7 @@ export type ProductCategory = {
   slug: string;
   name: string;
   description: string;
+  image?: string;
 };
 
 export type ProductGroup = {
@@ -19,28 +20,33 @@ export type ProductGroup = {
   moq: string;
   leadTime: string;
   relatedSlugs: string[];
+  image?: string;
 };
 
 export const productCategories: ProductCategory[] = [
   {
     slug: "bamboo-products",
     name: "Bamboo Products",
-    description: "Bamboo sticks and fencing for garden, agriculture, retail, and project buyers."
+    description: "Bamboo sticks and fencing for garden, agriculture, retail, and project buyers.",
+    image: "/images/bamboo_forest.png"
   },
   {
     slug: "packaging-materials",
     name: "Packaging Materials",
-    description: "Stretch film and packaging tape for logistics, pallet wrapping, and carton sealing."
+    description: "Stretch film and packaging tape for logistics, pallet wrapping, and carton sealing.",
+    image: "/images/stretch_film.jpg"
   },
   {
     slug: "charcoal-biomass",
     name: "Charcoal & Biomass",
-    description: "BBQ charcoal and biochar pages separated by buyer use case and document needs."
+    description: "BBQ charcoal and biochar pages separated by buyer use case and document needs.",
+    image: "/images/charcoal_biochar.png"
   },
   {
     slug: "natural-furniture",
     name: "Natural Furniture",
-    description: "Rattan and bamboo furniture sourcing for hospitality, retail, and project orders."
+    description: "Rattan and bamboo furniture sourcing for hospitality, retail, and project orders.",
+    image: "/images/rattan_furniture.jpg"
   }
 ];
 
@@ -60,7 +66,8 @@ export const productGroups: ProductGroup[] = [
     documents: ["Commercial invoice", "Packing list", "Certificate of Origin support if applicable"],
     moq: "Contact for details by size and packing.",
     leadTime: "Subject to confirmed size, quantity, season, and packing plan.",
-    relatedSlugs: ["bamboo-fence", "rattan-furniture"]
+    relatedSlugs: ["bamboo-fence", "rattan-furniture"],
+    image: "/images/bamboo_poles.jpg"
   },
   {
     slug: "bamboo-fence",
@@ -77,7 +84,8 @@ export const productGroups: ProductGroup[] = [
     documents: ["Commercial invoice", "Packing list", "Fumigation or phytosanitary support if applicable"],
     moq: "Contact for details. MOQ depends on roll size, finish, and packing.",
     leadTime: "Subject to order quantity and confirmed specification.",
-    relatedSlugs: ["bamboo-sticks", "rattan-furniture"]
+    relatedSlugs: ["bamboo-sticks", "rattan-furniture"],
+    image: "/images/bamboo_fences.jpg"
   },
   {
     slug: "packaging-tape",
@@ -94,7 +102,8 @@ export const productGroups: ProductGroup[] = [
     documents: ["Commercial invoice", "Packing list", "Specification sheet if required"],
     moq: "Contact for details by tape size and order program.",
     leadTime: "Subject to size, color, adhesive requirement, and production plan.",
-    relatedSlugs: ["stretch-film"]
+    relatedSlugs: ["stretch-film"],
+    image: "/images/packaging_tape.png"
   },
   {
     slug: "stretch-film",
@@ -111,7 +120,8 @@ export const productGroups: ProductGroup[] = [
     documents: ["Commercial invoice", "Packing list", "Specification sheet if required"],
     moq: "Contact for details by roll type and packing.",
     leadTime: "Subject to order quantity, film specification, and production plan.",
-    relatedSlugs: ["packaging-tape"]
+    relatedSlugs: ["packaging-tape"],
+    image: "/images/stretch_film.jpg"
   },
   {
     slug: "bbq-charcoal",
@@ -128,7 +138,8 @@ export const productGroups: ProductGroup[] = [
     documents: ["Commercial invoice", "Packing list", "Lab report only if verified"],
     moq: "Contact for details by charcoal type and packing.",
     leadTime: "Subject to packing, verified specification, and available production plan.",
-    relatedSlugs: ["biochar"]
+    relatedSlugs: ["biochar"],
+    image: "/images/charcoal_biochar.png"
   },
   {
     slug: "biochar",
@@ -145,7 +156,8 @@ export const productGroups: ProductGroup[] = [
     documents: ["Commercial invoice", "Packing list", "Lab report only if verified"],
     moq: "Contact for details by packing and application.",
     leadTime: "Subject to verified specification, quantity, and packing plan.",
-    relatedSlugs: ["bbq-charcoal"]
+    relatedSlugs: ["bbq-charcoal"],
+    image: "/images/charcoal_biochar.png"
   },
   {
     slug: "rattan-furniture",
@@ -162,7 +174,8 @@ export const productGroups: ProductGroup[] = [
     documents: ["Commercial invoice", "Packing list", "Catalogue or spec sheet if available"],
     moq: "Contact for details by item type and project scope.",
     leadTime: "Subject to sample approval, material, quantity, and packing plan.",
-    relatedSlugs: ["bamboo-fence", "bamboo-sticks"]
+    relatedSlugs: ["bamboo-fence", "bamboo-sticks"],
+    image: "/images/rattan_furniture.jpg"
   }
 ];
 
