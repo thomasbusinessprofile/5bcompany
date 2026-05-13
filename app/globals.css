@@ -655,7 +655,7 @@ p {
   padding: 100px clamp(20px, 4vw, 56px) 60px;
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
-  gap: 80px;
+  gap: 60px 80px;
   margin-top: 100px;
   position: relative;
 }
@@ -686,6 +686,27 @@ p {
 .site-footer a:hover {
   color: var(--green-light);
   transform: translateX(5px);
+}
+
+.footer-legal {
+  grid-column: 1 / -1;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+}
+.footer-legal p { margin: 0; max-width: 60ch; }
+.footer-legal .muted { color: rgba(255, 255, 255, 0.4); }
+
+@media (max-width: 900px) {
+  .site-footer { grid-template-columns: 1fr 1fr; gap: 48px; padding-top: 64px; }
+}
+@media (max-width: 560px) {
+  .site-footer { grid-template-columns: 1fr; gap: 40px; }
 }
 
 .seller-block {
