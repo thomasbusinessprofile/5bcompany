@@ -10,7 +10,7 @@ function getFormValue(formData: FormData, key: string) {
 }
 
 function isValidEmail(value: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  return /^[^\s@]{2,}@[^\s@]{3,}\.[a-zA-Z]{2,}$/.test(value);
 }
 
 export async function createPublicInquiry(formData: FormData) {

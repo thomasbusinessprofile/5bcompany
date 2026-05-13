@@ -12,7 +12,7 @@ type LoginPageProps = {
 
 function getMessage(status?: string) {
   if (status === "check-email") {
-    return { tone: "success", text: "Account created. Check your email if confirmation is required, then sign in." };
+    return { tone: "success", text: "Account created. Please check your email to confirm your address, then sign in." };
   }
 
   if (status === "missing-fields") {

@@ -75,7 +75,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
           </label>
           <label>
             Business type
-            <select defaultValue="" name="business_type">
+            <select defaultValue="" name="business_type" required>
               <option value="" disabled>
                 Select business type
               </option>
@@ -92,8 +92,19 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
           </label>
           <label>
             Password
-            <input autoComplete="new-password" minLength={8} name="password" placeholder="Create a password" required type="password" />
+            <input
+              aria-describedby="register-password-hint"
+              autoComplete="new-password"
+              minLength={8}
+              name="password"
+              placeholder="Create a password"
+              required
+              type="password"
+            />
           </label>
+          <p className="form-note" id="register-password-hint">
+            Minimum 8 characters. Use a mix of letters, numbers, and symbols.
+          </p>
           <button aria-describedby="register-submit-note" className="primary-link" type="submit">
             Create buyer account
           </button>

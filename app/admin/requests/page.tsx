@@ -24,13 +24,7 @@ export default async function AdminRequestsPage() {
         </p>
       </section>
       <section className="page-card dashboard-panel">
-        <div className="filter-bar compact-filter" aria-label="Request filters">
-          <span className="filter-chip active">All</span>
-          <span className="filter-chip">New</span>
-          <span className="filter-chip">Need Info</span>
-          <span className="filter-chip">Quote Prep</span>
-          <span className="filter-chip">High Priority</span>
-        </div>
+        {/* Filters intentionally omitted until backend filter wiring lands; do not render dead UI. */}
         <div className="table-list request-table">
           <div className="table-row table-head">
             <strong>Request</strong>

@@ -188,11 +188,15 @@ export default async function BuyerRequestDetailPage({
               Upload attachment
               <input
                 accept=".pdf,.docx,.xlsx,image/png,image/jpeg,image/webp"
+                aria-describedby="attachment-hint"
                 name="attachment"
                 required
                 type="file"
               />
             </label>
+            <p className="form-note" id="attachment-hint">
+              PDF, DOCX, XLSX, PNG, JPG, or WEBP. Maximum file size 10 MB.
+            </p>
             <button className="primary-link" type="submit">
               Upload file
             </button>
