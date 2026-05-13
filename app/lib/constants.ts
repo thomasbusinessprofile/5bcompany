@@ -15,6 +15,6 @@ export const BUSINESS_TYPES = [
   { label: "Other", value: "other" }
 ] as const;
 
-export const BUSINESS_TYPE_VALUES = new Set(BUSINESS_TYPES.map((b) => b.value));
+export const BUSINESS_TYPE_VALUES: Set<string> = new Set(BUSINESS_TYPES.map((b) => b.value));
 
 export const INCOTERMS = ["EXW", "FOB", "CFR", "CIF", "DDP"] as const;
