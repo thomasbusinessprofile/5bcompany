@@ -121,24 +121,17 @@ export default async function RootLayout({
             <div className="seller-block">
               <h2>Registered company</h2>
               <p>
-                <strong>{company.legalNameEn}</strong>
-                <br />
-                <small>{company.legalNameVi}</small>
+                <strong>{company.legalNameEn}</strong> · <small>{company.legalNameVi}</small>
               </p>
               <p>{company.address}</p>
               <p>
-                Tax ID: {company.taxId}
-                <br />
-                Founded: {company.yearFounded}
+                Tax ID {company.taxId} · Founded {company.yearFounded}
               </p>
               <p>
-                Tel / WhatsApp:{" "}
                 <Link href={`https://wa.me/${company.whatsapp.replace(/[^0-9]/g, "")}`}>
                   {company.phone}
-                </Link>
-              </p>
-              <p>
-                Email:{" "}
+                </Link>{" "}
+                ·{" "}
                 <Link href={`mailto:${company.email}`}>{company.email}</Link>
               </p>
               <p className="footer-flags" aria-label="Markets served">
