@@ -38,6 +38,7 @@ export async function proxy(request: NextRequest) {
     const loginUrl = request.nextUrl.clone();
     loginUrl.pathname = "/login";
     loginUrl.searchParams.set("next", pathname);
+    loginUrl.searchParams.set("status", "expired");
     return NextResponse.redirect(loginUrl);
   }
 
@@ -53,6 +54,13 @@ export async function proxy(request: NextRequest) {
 
   const role = profile?.role;
 
+  if (!role && (pathname.startsWith("/buyer") || pathname.startsWith("/admin"))) {
+    const loginUrl = request.nextUrl.clone();
+    loginUrl.pathname = "/login";
+    loginUrl.searchParams.set("status", "missing-profile");
+    return NextResponse.redirect(loginUrl);
+  }
+
   if ((pathname === "/login" || pathname === "/register") && role) {
     const homeUrl = request.nextUrl.clone();
     homeUrl.pathname = getRoleHome(role);
@@ -61,17 +69,17 @@ export async function proxy(request: NextRequest) {
   }
 
   if (pathname.startsWith("/buyer") && !canAccessBuyerArea(role)) {
-    const targetUrl = request.nextUrl.clone();
-    targetUrl.pathname = getRoleHome(role);
-    targetUrl.search = "";
-    return NextResponse.redirect(targetUrl);
+    const loginUrl = request.nextUrl.clone();
+    loginUrl.pathname = "/login";
+    loginUrl.searchParams.set("status", "unauthorized");
+    return NextResponse.redirect(loginUrl);
   }
 
   if (pathname.startsWith("/admin") && !canAccessAdminArea(role)) {
-    const targetUrl = request.nextUrl.clone();
-    targetUrl.pathname = getRoleHome(role);
-    targetUrl.search = "";
-    return NextResponse.redirect(targetUrl);
+    const loginUrl = request.nextUrl.clone();
+    loginUrl.pathname = "/login";
+    loginUrl.searchParams.set("status", "unauthorized");
+    return NextResponse.redirect(loginUrl);
   }
 
   return response;

@@ -25,6 +25,10 @@ function getMessage(status?: string) {
     return { tone: "error", text: "Please enter name, work email, company name, and password." };
   }
 
+  if (status === "email-exists") {
+    return { tone: "error", text: "This email is already registered. Please login instead." };
+  }
+
   if (status === "submit-error") {
     return { tone: "error", text: "Registration failed. Please check the details or try signing in." };
   }

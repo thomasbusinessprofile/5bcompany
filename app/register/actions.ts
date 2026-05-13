@@ -57,6 +57,9 @@ export async function registerBuyer(formData: FormData) {
   });
 
   if (error) {
+    if (error.message.toLowerCase().includes("already registered")) {
+      redirect("/register?status=email-exists");
+    }
     redirect("/register?status=submit-error");
   }
 

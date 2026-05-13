@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { getCurrentStaffProfileId } from "../../../shared/admin-data";
 import { structureRequestWithAi } from "../../../shared/ai-request-structure";
 import { createSupabaseServerClient } from "../../../lib/supabase/server";
+import { trackEvent } from "../../../shared/analytics";
 
 const requestStatuses = new Set([
   "new",
@@ -61,6 +62,8 @@ export async function updateRequestStatus(formData: FormData) {
     old_status: current?.status ?? null,
     request_id: requestId
   });
+
+  await trackEvent("admin_status_changed", { request_id: requestId, old_status: current?.status, new_status: status });
 
   revalidatePath(`/admin/requests/${requestId}`);
   revalidatePath("/admin/requests");

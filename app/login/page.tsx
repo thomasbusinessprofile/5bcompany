@@ -27,6 +27,18 @@ function getMessage(status?: string) {
     return { tone: "error", text: "Supabase is not configured for this environment." };
   }
 
+  if (status === "expired") {
+    return { tone: "error", text: "Your session has expired. Please login again." };
+  }
+
+  if (status === "missing-profile") {
+    return { tone: "error", text: "Your user profile is missing. Please contact support." };
+  }
+
+  if (status === "unauthorized") {
+    return { tone: "error", text: "You do not have permission to access this area." };
+  }
+
   return null;
 }
 

@@ -27,16 +27,64 @@ export async function POST(request: Request) {
     const openRouterKey = process.env.OPENROUTER_API_KEY;
     let fallbackUsed = false;
     let summary = "AI analysis not available.";
-    let missingFields = ["destination_port", "target_price"];
-    let suggestedQuestions = ["What is your target delivery date?", "Do you need custom packaging?"];
+    let missingFields: string[] = ["destination_port", "target_price"];
+    let suggestedQuestions: string[] = ["What is your target delivery date?", "Do you need custom packaging?"];
     
     if (!openRouterKey) {
       fallbackUsed = true;
-      summary = "Fallback: Basic keyword detection. Missing critical dimensions.";
+      summary = "Fallback: Basic keyword detection used because AI service is not configured.";
     } else {
-      // TODO: Implement actual OpenRouter API call
-      // model = nvidia/nemotron-3-super-120b-a12b:free
-      summary = "Structured request from OpenRouter mock.";
+      try {
+        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${openRouterKey}`,
+            "Content-Type": "application/json",
+            "HTTP-Referer": "https://5bcompany.com", // Optional, for OpenRouter rankings
+            "X-Title": "5B Sourcing Platform"
+          },
+          body: JSON.stringify({
+            model: "nvidia/nemotron-3-super-120b-a12b:free",
+            messages: [
+              {
+                role: "system",
+                content: `You are a professional export sourcing assistant for 5B Trading.
+                Your task is to analyze a buyer's sourcing request and:
+                1. Provide a concise summary for an admin.
+                2. Identify missing fields from this list: title, category, product, quantity, unit, destination, incoterm, packing, quality, documents, timeline, target price.
+                3. Suggest 2-3 clarification questions for the buyer.
+                
+                STRICT GUARDRAILS:
+                - Do NOT quote a price.
+                - Do NOT promise supply or availability.
+                - Do NOT commit to any lead time or shipment date.
+                - Focus ONLY on structuring the buyer's inputs.
+                
+                Return the response as a JSON object with keys: "summary", "missing_fields", "suggested_questions".`
+              },
+              {
+                role: "user",
+                content: `Analyze this request: ${JSON.stringify(body.draft_request_fields || body.request_id)}`
+              }
+            ],
+            response_format: { type: "json_object" }
+          })
+        });
+
+        if (response.ok) {
+          const aiData = await response.json();
+          const content = JSON.parse(aiData.choices[0].message.content);
+          summary = content.summary;
+          missingFields = content.missing_fields;
+          suggestedQuestions = content.suggested_questions;
+        } else {
+          fallbackUsed = true;
+          summary = "OpenRouter API returned an error. Using fallback detection.";
+        }
+      } catch (err) {
+        fallbackUsed = true;
+        summary = "Failed to connect to AI service. Using fallback detection.";
+      }
     }
 
     const aiResponse = {

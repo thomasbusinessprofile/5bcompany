@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { getCurrentBuyerProfileId } from "../../../shared/buyer-data";
 import { createSupabaseServerClient } from "../../../lib/supabase/server";
+import { trackEvent } from "../../../shared/analytics";
 
 function value(formData: FormData, key: string) {
   const item = formData.get(key);
@@ -21,14 +22,36 @@ export async function createBuyerSourcingRequest(formData: FormData) {
   const supabase = await createSupabaseServerClient();
 
   if (!supabase) {
+    await trackEvent("request_submission_failed", { source: "buyer_portal", reason: "config-error" });
+    redirect("/buyer/requests/new?status=config-error");
+  }
+
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    await trackEvent("request_submission_failed", { source: "buyer_portal", reason: "unauthorized" });
     redirect("/login");
   }
 
-  const buyerId = await getCurrentBuyerProfileId();
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("id")
+    .eq("user_id", user.id)
+    .single();
+
+  if (!profile) {
+    await trackEvent("request_submission_failed", { source: "buyer_portal", reason: "missing-profile" });
+    redirect("/buyer/requests/new?status=submit-error");
+  }
+
+  const buyerId = profile.id;
   const title = value(formData, "title");
   const productName = value(formData, "product_name");
 
   if (!title || !productName) {
+    await trackEvent("request_submission_failed", { source: "buyer_portal", reason: "missing-fields" });
     redirect("/buyer/requests/new?status=missing-fields");
   }
 
@@ -76,9 +99,11 @@ export async function createBuyerSourcingRequest(formData: FormData) {
     .select("id")
     .single();
 
-  if (error || !data?.id) {
+  if (error || !data) {
+    await trackEvent("request_submission_failed", { source: "buyer_portal", reason: "db-error" });
     redirect("/buyer/requests/new?status=submit-error");
   }
 
-  redirect(`/buyer/requests/${data.id}`);
+  await trackEvent("request_submitted", { source: "buyer_portal", request_id: data.id });
+  redirect(`/buyer/requests/${data.id}?status=created`);
 }

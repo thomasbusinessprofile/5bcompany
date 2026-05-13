@@ -12,6 +12,9 @@ export default async function AdminDashboardPage() {
     { label: "New", value: String(metrics.newCount).padStart(2, "0") },
     { label: "Need Info", value: String(metrics.needInfo).padStart(2, "0") },
     { label: "Quote Prep", value: String(metrics.quotePrep).padStart(2, "0") },
+    { label: "Won", value: String(metrics.wonCount).padStart(2, "0") },
+    { label: "Lost", value: String(metrics.lostCount).padStart(2, "0") },
+    { label: "Avg Response", value: metrics.averageAdminResponseTime },
     { label: "Visible RFQs", value: String(metrics.total).padStart(2, "0") }
   ];
 

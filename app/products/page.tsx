@@ -63,46 +63,56 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
       </section>
 
       <section className="catalogue-grid" aria-label="Product catalogue">
-        {visibleProducts.map((product) => (
-          <article className="product-card catalogue-card" key={product.slug}>
-            <div>
-              <p className="card-kicker">
-                {categories.find((item) => item.slug === product.category)?.name}
-              </p>
-              <h2>{product.name}</h2>
-              <p>{product.summary}</p>
-            </div>
-            <dl className="mini-specs">
+        {visibleProducts.length > 0 ? (
+          visibleProducts.map((product) => (
+            <article className="product-card catalogue-card" key={product.slug}>
               <div>
-                <dt>Specs</dt>
-                <dd>{product.specs.slice(0, 2).join(" / ")}</dd>
+                <p className="card-kicker">
+                  {categories.find((item) => item.slug === product.category)?.name}
+                </p>
+                <h2>{product.name}</h2>
+                <p>{product.summary}</p>
               </div>
-              <div>
-                <dt>Packing</dt>
-                <dd>{product.packingOptions.slice(0, 2).join(" / ")}</dd>
+              <dl className="mini-specs">
+                <div>
+                  <dt>Specs</dt>
+                  <dd>{product.specs.slice(0, 2).join(" / ")}</dd>
+                </div>
+                <div>
+                  <dt>Packing</dt>
+                  <dd>{product.packingOptions.slice(0, 2).join(" / ")}</dd>
+                </div>
+                <div>
+                  <dt>MOQ</dt>
+                  <dd>{product.moq}</dd>
+                </div>
+              </dl>
+              <div className="tag-row">
+                {product.tags.map((tag) => (
+                  <span className="tag" key={tag}>
+                    {tag}
+                  </span>
+                ))}
               </div>
-              <div>
-                <dt>MOQ</dt>
-                <dd>{product.moq}</dd>
+              <div className="card-actions">
+                <Link className="secondary-link" href={`/products/${product.slug}`}>
+                  View detail
+                </Link>
+                <Link className="primary-link" href={`/request-quote?product=${product.slug}`}>
+                  Create Request
+                </Link>
               </div>
-            </dl>
-            <div className="tag-row">
-              {product.tags.map((tag) => (
-                <span className="tag" key={tag}>
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <div className="card-actions">
-              <Link className="secondary-link" href={`/products/${product.slug}`}>
-                View detail
-              </Link>
-              <Link className="primary-link" href={`/request-quote?product=${product.slug}`}>
-                Create Request
-              </Link>
-            </div>
-          </article>
-        ))}
+            </article>
+          ))
+        ) : (
+          <div className="empty-state">
+            <h2>No products found</h2>
+            <p>We couldn't find any products in this category. Please check back later or view all products.</p>
+            <Link className="primary-link mt-4" href="/products">
+              View all products
+            </Link>
+          </div>
+        )}
       </section>
     </div>
   );

@@ -35,8 +35,12 @@ export async function sendBuyerMessage(formData: FormData) {
   });
 
   if (error) {
-    redirect(`/buyer/requests/${requestId}?status=message-error`);
+    redirect(`/buyer/requests/${requestId}?status=message-error#messages`);
   }
+
+  void import("../../../shared/analytics").then(({ trackEvent }) => {
+    trackEvent("buyer_message_sent", { request_id: requestId });
+  });
 
   revalidatePath(`/buyer/requests/${requestId}`);
   redirect(`/buyer/requests/${requestId}?status=message-sent#messages`);

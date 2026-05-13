@@ -28,6 +28,10 @@ export default async function NewBuyerRequestPage({ searchParams }: NewBuyerRequ
   const message = getMessage(status);
   const { categories, products } = await getCatalogueData();
 
+  void import("../../../shared/analytics").then(({ trackEvent }) => {
+    trackEvent("request_started", { source: "buyer_portal" });
+  });
+
   return (
     <div className="page-shell">
       <section className="section-title">

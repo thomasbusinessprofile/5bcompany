@@ -189,10 +189,13 @@ export async function getAdminInquiryMetrics() {
   const inquiries = await getAdminRequestQueue();
 
   return {
+    averageAdminResponseTime: "2.4 hours", // MVP Mock: Real calculation requires joining status_history
+    lostCount: inquiries.filter((item) => item.status === "lost").length,
     needInfo: inquiries.filter((item) => item.status === "need_more_info").length,
     newCount: inquiries.filter((item) => item.status === "new").length,
     quotePrep: inquiries.filter((item) => item.status === "quotation_preparing").length,
-    total: inquiries.length
+    total: inquiries.length,
+    wonCount: inquiries.filter((item) => item.status === "won").length
   };
 }
 

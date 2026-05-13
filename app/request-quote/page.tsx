@@ -56,6 +56,10 @@ export default async function RequestQuotePage({ searchParams }: RequestQuotePag
   const selectedCategory = selectedProduct?.category ?? "";
   const statusMessage = getStatusMessage(status);
 
+  void import("../shared/analytics").then(({ trackEvent }) => {
+    trackEvent("request_started", { source: "public_rfq" });
+  });
+
   return (
     <div className="page-shell">
       <section className="section-title">

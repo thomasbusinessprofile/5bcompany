@@ -51,6 +51,11 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
     notFound();
   }
 
+  // Only track in production or simply don't await to avoid blocking render
+  void import("../../shared/analytics").then(({ trackEvent }) => {
+    trackEvent("product_viewed", { product_slug: slug });
+  });
+
   const relatedProducts = product.relatedSlugs
     .map((relatedSlug) => products.find((item) => item.slug === relatedSlug))
     .filter((item): item is ProductGroup => item !== undefined);

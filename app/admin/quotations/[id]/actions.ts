@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "../../../lib/supabase/server";
+import { trackEvent } from "../../../shared/analytics";
 
 function value(formData: FormData, key: string) {
   const item = formData.get(key);
@@ -97,6 +98,8 @@ export async function sendQuotationToBuyer(formData: FormData) {
     .from("sourcing_requests")
     .update({ status: "quotation_sent" })
     .eq("id", quote.request_id);
+
+  await trackEvent("quotation_sent", { quotation_id: quoteId, request_id: quote.request_id });
 
   revalidatePath(`/admin/quotations/${quoteId}`);
   revalidatePath(`/buyer/requests/${quote.request_id}`);
