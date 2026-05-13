@@ -3,6 +3,7 @@ import Link from "next/link";
 import { NavLink } from "./shared/NavLink";
 import { company } from "./shared/company";
 import { getSiteUrl } from "./shared/site";
+import { createSupabaseServerClient } from "./lib/supabase/server";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 
@@ -35,11 +36,16 @@ const navItems = [
   { href: "/admin/dashboard", label: "Admin" }
 ];
 
-export default function RootLayout({
+export default async function RootLayout({
   children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { user }
+  } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
+
   return (
     <html lang="vi" className={`${inter.variable} ${outfit.variable}`}>
       <body>
@@ -59,14 +65,17 @@ export default function RootLayout({
             ))}
           </nav>
           <div className="header-actions">
-            <Link className="ghost-link" href="/login">
-              Login
-            </Link>
-            <form action="/logout" method="post">
-              <button className="ghost-link nav-button" type="submit">
-                Logout
-              </button>
-            </form>
+            {user ? (
+              <form action="/logout" method="post" className="auth-form-inline">
+                <button className="ghost-link nav-button" type="submit">
+                  Logout
+                </button>
+              </form>
+            ) : (
+              <Link className="ghost-link" href="/login">
+                Login
+              </Link>
+            )}
             <Link className="primary-link" href="/request-quote">
               Create Request
             </Link>
