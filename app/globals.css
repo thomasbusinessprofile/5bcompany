@@ -724,12 +724,26 @@ p {
 }
 
 .seller-block {
-  margin-top: 40px;
-  padding: 32px;
+  margin-top: 28px;
+  padding: 18px 20px;
   background: rgba(255, 255, 255, 0.03);
   border-radius: var(--radius-md);
   border: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 13px;
+  line-height: 1.55;
 }
+.seller-block h2 {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 10px;
+}
+.seller-block p { margin: 0 0 6px; color: rgba(255,255,255,0.7); }
+.seller-block p:last-child { margin-bottom: 0; }
+.seller-block strong { color: #fff; }
+.seller-block small { color: rgba(255,255,255,0.5); }
+.footer-flags { display: flex; gap: 6px; margin-top: 10px; font-size: 16px; }
 
 /* Responsive */
 @media (max-width: 1100px) {
