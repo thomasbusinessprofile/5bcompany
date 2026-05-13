@@ -29,12 +29,28 @@ export const metadata: Metadata = {
 
 const navItems = [
   { href: "/products", label: "Products" },
-  { href: "/request-quote", label: "Sourcing" },
-  { href: "/export-process", label: "Export Process" },
+  { href: "/about", label: "Our Story" },
+  { href: "/export-process", label: "Process" },
   { href: "/articles", label: "Insights" },
-  { href: "/buyer/dashboard", label: "Buyer" },
-  { href: "/admin/dashboard", label: "Admin" }
+  { href: "/request-quote", label: "Sourcing" }
 ];
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: company.legalNameEn,
+  alternateName: company.shortName,
+  url: getSiteUrl(),
+  logo: `${getSiteUrl()}/images/warehouse_loading.jpg`,
+  email: company.email,
+  telephone: company.phone,
+  foundingDate: String(company.yearFounded),
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: company.address,
+    addressCountry: "VN"
+  }
+};
 
 export default async function RootLayout({
   children
@@ -49,6 +65,10 @@ export default async function RootLayout({
   return (
     <html lang="vi" className={`${inter.variable} ${outfit.variable}`}>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <header className="site-header">
           <Link className="brand" href="/" aria-label={`${company.shortName} home`}>
             <span className="brand-mark">5B</span>
@@ -97,18 +117,29 @@ export default async function RootLayout({
               quotation workflow.
             </p>
             <div className="seller-block">
-              <h2>The Seller / Ben ban</h2>
+              <h2>Registered company</h2>
               <p>
-                <strong>{company.legalNameVi}</strong>
+                <strong>{company.legalNameEn}</strong>
                 <br />
-                {company.legalNameEn}
+                <small>{company.legalNameVi}</small>
               </p>
               <p>{company.address}</p>
-              <p>Tel: {company.phone}</p>
               <p>
-                Represented by: {company.representativeEn}
+                Tax ID: {company.taxId}
                 <br />
-                Nguoi dai dien: {company.representativeVi}
+                Founded: {company.yearFounded}
+              </p>
+              <p>
+                Tel / WhatsApp: {company.phone}
+                <br />
+                Email: <Link href={`mailto:${company.email}`}>{company.email}</Link>
+              </p>
+              <p className="footer-flags" aria-label="Markets served">
+                {company.marketsServed.map((m) => (
+                  <span key={m.code} title={m.name}>
+                    {m.flag}
+                  </span>
+                ))}
               </p>
             </div>
           </div>

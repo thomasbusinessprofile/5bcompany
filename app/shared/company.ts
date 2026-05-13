@@ -3,7 +3,19 @@ export const company = {
   legalNameEn: "5B TRADING CO., LTD",
   legalNameVi: "CÔNG TY TNHH THƯƠNG MẠI 5B",
   phone: "0825646868",
+  whatsapp: "+84825646868",
+  email: "hello@5bcompany.com",
   representativeEn: "Do Thi Hoa - Director",
   representativeVi: "Do Thi Hoa - GIÁM ĐỐC",
-  shortName: "5B Trading"
+  shortName: "5B Trading",
+  yearFounded: 2018,
+  taxId: "0XXXXXXXXX",
+  marketsServed: [
+    { code: "US", name: "United States", flag: "🇺🇸" },
+    { code: "JP", name: "Japan", flag: "🇯🇵" },
+    { code: "DE", name: "Germany", flag: "🇩🇪" },
+    { code: "KR", name: "South Korea", flag: "🇰🇷" },
+    { code: "AU", name: "Australia", flag: "🇦🇺" },
+    { code: "AE", name: "UAE", flag: "🇦🇪" }
+  ]
 };

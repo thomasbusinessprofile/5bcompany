@@ -8,7 +8,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const { products } = await getCatalogueData();
   const articles = await getPublicArticles();
   const now = new Date();
-  const staticRoutes = ["", "/products", "/request-quote", "/export-process", "/articles"].map(
+  const staticRoutes = ["", "/about", "/products", "/request-quote", "/export-process", "/articles"].map(
     (path) => ({
       changeFrequency: "weekly" as const,
       lastModified: now,
