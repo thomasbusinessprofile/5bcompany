@@ -7,7 +7,7 @@ import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin", "vietnamese"], variable: "--font-inter" });
-const outfit = Outfit({ subsets: ["latin", "vietnamese"], variable: "--font-outfit" });
+const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
   alternates: {
