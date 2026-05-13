@@ -84,7 +84,7 @@ export default async function RequestQuotePage({ searchParams }: RequestQuotePag
             <input name="full_name" placeholder="Example: Anna Lee" required />
           </label>
           <label>
-            Email
+            Work email
             <input name="email" placeholder="anna@company.com" required type="email" />
           </label>
           <label>
@@ -92,12 +92,12 @@ export default async function RequestQuotePage({ searchParams }: RequestQuotePag
             <input name="company_name" placeholder="Company name" required />
           </label>
           <label>
-            Phone / WhatsApp
-            <input name="phone" placeholder="+84..." />
+            Destination country
+            <input name="country" placeholder="Example: Germany" required />
           </label>
           <label>
-            Product category
-            <select defaultValue={selectedCategory} name="category">
+            Product of interest
+            <select defaultValue={selectedCategory} name="category" required>
               <option value="" disabled>
                 Select category
               </option>
@@ -118,24 +118,18 @@ export default async function RequestQuotePage({ searchParams }: RequestQuotePag
             />
           </label>
           <label>
-            Target quantity
-            <input name="quantity" placeholder="Example: 1 x 40HQ" />
+            Target quantity & timeline
+            <input
+              name="quantity"
+              placeholder="Example: 1 × 40HQ, ship in Q3 2026"
+            />
           </label>
           <label>
-            Destination country
-            <input name="country" placeholder="Example: Germany" />
-          </label>
-          <label>
-            Destination port
-            <input name="destination_port" placeholder="Example: Hamburg" />
-          </label>
-          <label>
-            Packing requirement
-            <textarea name="packing_requirement" placeholder="Retail label, pallet packing, carton marks..." />
-          </label>
-          <label>
-            Additional notes
-            <textarea name="message" placeholder="Quality needs, document requirements, timeline..." />
+            Additional notes (optional)
+            <textarea
+              name="message"
+              placeholder="Packing, certification, lead time, anything else we should know..."
+            />
           </label>
           <SubmitButton pendingLabel="Submitting...">Submit request</SubmitButton>
           <p className="form-note" id="request-submit-note">
