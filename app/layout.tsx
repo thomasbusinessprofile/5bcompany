@@ -110,13 +110,13 @@ export default async function RootLayout({
               <span className="brand-mark">5B</span>
               <span>
                 <strong>{company.shortName}</strong>
-                <small>Export Sourcing</small>
+                <small>Vietnam Export Sourcing</small>
               </span>
             </Link>
             <p>
-              B2B export sourcing portal for serious buyers seeking Vietnam
-              product supply with structured requests and admin-controlled
-              quotation workflow.
+              Curated sourcing partner connecting global buyers with vetted
+              Vietnamese makers — bamboo, rattan, ceramic, silk, biochar, and
+              specialty paper.
             </p>
             <div className="seller-block">
               <h2>Registered company</h2>
@@ -132,7 +132,7 @@ export default async function RootLayout({
                 Founded: {company.yearFounded}
               </p>
               <p>
-                Tel / WhatsApp: {company.phone}
+                Tel / WhatsApp: <Link href={`https://wa.me/${company.whatsapp.replace(/[^0-9]/g, "")}`}>{company.phone}</Link>
                 <br />
                 Email: <Link href={`mailto:${company.email}`}>{company.email}</Link>
               </p>
@@ -146,19 +146,31 @@ export default async function RootLayout({
             </div>
           </div>
           <div>
-            <h2>Product Groups</h2>
-            <Link href="/products/bamboo-fence">Bamboo products</Link>
-            <Link href="/products/stretch-film">Packaging materials</Link>
-            <Link href="/products/bbq-charcoal">Charcoal and biochar</Link>
-            <Link href="/products/rattan-furniture">Rattan furniture</Link>
+            <h2>Explore</h2>
+            <Link href="/products">All products</Link>
+            <Link href="/about">Our story</Link>
+            <Link href="/sustainability">Sustainability</Link>
+            <Link href="/articles">Insights</Link>
           </div>
           <div>
-            <h2>Export Support</h2>
+            <h2>Get in touch</h2>
+            <Link href="/request-quote">Request a quote</Link>
             <Link href="/export-process">Export process</Link>
-            <Link href="/articles">Insights</Link>
-            <Link href="/request-quote">Create sourcing request</Link>
-            <Link href="/admin/products">Product CMS</Link>
-            <Link href="/admin/articles">Article CMS</Link>
+            <Link href={`mailto:${company.email}`}>Email us</Link>
+            <Link
+              href={`https://wa.me/${company.whatsapp.replace(/[^0-9]/g, "")}`}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              WhatsApp
+            </Link>
+          </div>
+          <div className="footer-legal">
+            <p>© {new Date().getFullYear()} {company.legalNameEn}. All rights reserved.</p>
+            <p className="muted">
+              Certifications referenced on this site are held by partner
+              factories, not by 5B Trading. Details disclosed upon LOI.
+            </p>
           </div>
         </footer>
       </body>
