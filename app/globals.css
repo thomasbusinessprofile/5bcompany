@@ -207,14 +207,34 @@ p {
 }
 
 .ghost-link {
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
   color: var(--muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  font-family: inherit;
   font-weight: 600;
   font-size: 14px;
+  min-height: 44px;
+  padding: 0 18px;
   transition: var(--transition);
 }
 
 .ghost-link:hover {
   color: var(--green);
+  border-color: var(--green);
+  background: var(--green-soft);
+}
+
+.auth-form-inline {
+  display: inline-flex;
+  margin: 0;
+}
+
+.auth-form-inline .nav-button {
+  margin: 0;
 }
 
 /* Layout Containers */
