@@ -132,9 +132,14 @@ export default async function RootLayout({
                 Founded: {company.yearFounded}
               </p>
               <p>
-                Tel / WhatsApp: <Link href={`https://wa.me/${company.whatsapp.replace(/[^0-9]/g, "")}`}>{company.phone}</Link>
-                <br />
-                Email: <Link href={`mailto:${company.email}`}>{company.email}</Link>
+                Tel / WhatsApp:{" "}
+                <Link href={`https://wa.me/${company.whatsapp.replace(/[^0-9]/g, "")}`}>
+                  {company.phone}
+                </Link>
+              </p>
+              <p>
+                Email:{" "}
+                <Link href={`mailto:${company.email}`}>{company.email}</Link>
               </p>
               <p className="footer-flags" aria-label="Markets served">
                 {company.marketsServed.map((m) => (

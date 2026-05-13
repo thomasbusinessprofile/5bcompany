@@ -688,6 +688,20 @@ p {
   transform: translateX(5px);
 }
 
+.site-footer .footer-brand {
+  display: inline-flex;
+  margin-bottom: 20px;
+}
+.site-footer .footer-brand:hover { transform: none; }
+.site-footer .footer-brand strong { color: #fff; font-size: 22px; margin-bottom: 4px; }
+.site-footer .footer-brand small { color: rgba(255,255,255,0.55); }
+.site-footer .footer-brand,
+.site-footer .footer-brand:hover { color: #fff; }
+.site-footer p a { display: inline; color: #fff; }
+.site-footer p a:hover { color: var(--green-light); transform: none; }
+.site-footer p { color: rgba(255,255,255,0.7); line-height: 1.7; }
+.seller-block p { margin-bottom: 10px; }
+
 .footer-legal {
   grid-column: 1 / -1;
   padding-top: 32px;
