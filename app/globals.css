@@ -587,9 +587,19 @@ h1 {
 }
 
 .form-status.error {
-  background: #fff4e1;
-  border-color: rgba(198, 146, 46, 0.38);
-  color: #6d4710;
+  background: #fdecec;
+  border-color: rgba(179, 38, 30, 0.38);
+  color: #8a1f1a;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+@media (max-width: 640px) {
+  .site-footer {
+    grid-template-columns: 1fr;
+  }
 }
 
 .auth-shell {

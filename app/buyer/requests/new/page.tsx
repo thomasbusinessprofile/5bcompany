@@ -105,10 +105,11 @@ export default async function NewBuyerRequestPage({ searchParams }: NewBuyerRequ
               <option value="" disabled>
                 Select incoterm
               </option>
+              <option value="EXW">EXW</option>
               <option value="FOB">FOB</option>
               <option value="CFR">CFR</option>
               <option value="CIF">CIF</option>
-              <option value="EXW discussion">EXW discussion</option>
+              <option value="DDP">DDP</option>
             </select>
           </label>
           <label>
