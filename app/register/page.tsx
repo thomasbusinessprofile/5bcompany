@@ -1,15 +1,9 @@
 import Link from "next/link";
 import { registerBuyer } from "./actions";
+import { SubmitButton } from "../shared/SubmitButton";
+import { BUSINESS_TYPES } from "../lib/constants";
 
-const businessTypes = [
-  { label: "Importer", value: "importer" },
-  { label: "Distributor", value: "distributor" },
-  { label: "Wholesaler", value: "wholesaler" },
-  { label: "Retailer", value: "retailer" },
-  { label: "Manufacturer", value: "manufacturer" },
-  { label: "Sourcing agent", value: "sourcing_agent" },
-  { label: "Other", value: "other" }
-];
+const businessTypes = BUSINESS_TYPES;
 
 export const metadata = {
   title: "Register | 5B Trading",
@@ -105,9 +99,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
           <p className="form-note" id="register-password-hint">
             Minimum 8 characters. Use a mix of letters, numbers, and symbols.
           </p>
-          <button aria-describedby="register-submit-note" className="primary-link" type="submit">
-            Create buyer account
-          </button>
+          <SubmitButton pendingLabel="Creating account...">Create buyer account</SubmitButton>
           <p className="form-note" id="register-submit-note">
             New public registrations always create buyer profiles. Staff roles
             are assigned separately by an admin in Supabase.

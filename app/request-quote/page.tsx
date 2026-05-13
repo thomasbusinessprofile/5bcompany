@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createPublicInquiry } from "./actions";
+import { SubmitButton } from "../shared/SubmitButton";
 import {
   getCatalogueData,
   getCatalogueProductBySlug,
@@ -136,9 +137,7 @@ export default async function RequestQuotePage({ searchParams }: RequestQuotePag
             Additional notes
             <textarea name="message" placeholder="Quality needs, document requirements, timeline..." />
           </label>
-          <button aria-describedby="request-submit-note" className="primary-link" type="submit">
-            Submit request
-          </button>
+          <SubmitButton pendingLabel="Submitting...">Submit request</SubmitButton>
           <p className="form-note" id="request-submit-note">
             This creates a public RFQ inquiry. Buyer account request history will
             be connected in the portal step.

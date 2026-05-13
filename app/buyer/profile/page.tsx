@@ -1,15 +1,9 @@
 import { updateBuyerProfile } from "./actions";
 import { getBuyerProfile } from "../../shared/buyer-data";
+import { SubmitButton } from "../../shared/SubmitButton";
+import { BUSINESS_TYPES } from "../../lib/constants";
 
-const businessTypes = [
-  { label: "Importer", value: "importer" },
-  { label: "Distributor", value: "distributor" },
-  { label: "Wholesaler", value: "wholesaler" },
-  { label: "Retailer", value: "retailer" },
-  { label: "Manufacturer", value: "manufacturer" },
-  { label: "Sourcing agent", value: "sourcing_agent" },
-  { label: "Other", value: "other" }
-];
+const businessTypes = BUSINESS_TYPES;
 
 export const metadata = {
   title: "Buyer Profile | 5B Trading",
@@ -80,9 +74,7 @@ export default async function BuyerProfilePage({ searchParams }: BuyerProfilePag
           WhatsApp
           <input defaultValue={profile?.whatsapp ?? ""} name="whatsapp" placeholder="+49..." />
         </label>
-        <button className="primary-link" type="submit">
-          Save profile
-        </button>
+        <SubmitButton pendingLabel="Saving...">Save profile</SubmitButton>
       </form>
     </div>
   );

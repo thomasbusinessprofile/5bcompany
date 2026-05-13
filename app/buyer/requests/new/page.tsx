@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { createBuyerSourcingRequest } from "./actions";
 import { getCatalogueData } from "../../../shared/catalogue";
+import { SubmitButton } from "../../../shared/SubmitButton";
+import { INCOTERMS } from "../../../lib/constants";
 
 export const metadata = {
   title: "New Sourcing Request | 5B Trading",
@@ -105,11 +107,11 @@ export default async function NewBuyerRequestPage({ searchParams }: NewBuyerRequ
               <option value="" disabled>
                 Select incoterm
               </option>
-              <option value="EXW">EXW</option>
-              <option value="FOB">FOB</option>
-              <option value="CFR">CFR</option>
-              <option value="CIF">CIF</option>
-              <option value="DDP">DDP</option>
+              {INCOTERMS.map((term) => (
+                <option key={term} value={term}>
+                  {term}
+                </option>
+              ))}
             </select>
           </label>
           <label>
@@ -132,9 +134,7 @@ export default async function NewBuyerRequestPage({ searchParams }: NewBuyerRequ
             Timeline
             <input name="timeline" placeholder="Example: quotation this week, shipment in July" />
           </label>
-          <button aria-describedby="new-request-note" className="primary-link" type="submit">
-            Create sourcing request
-          </button>
+          <SubmitButton pendingLabel="Creating...">Create sourcing request</SubmitButton>
           <p className="form-note" id="new-request-note">
             AI will structure the request in a later step. It will not quote,
             promise stock, or commit lead time.
