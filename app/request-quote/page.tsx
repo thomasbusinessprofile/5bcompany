@@ -28,7 +28,7 @@ function getStatusMessage(status?: string) {
   if (status === "missing-fields") {
     return {
       tone: "error",
-      text: "Please add your name, valid email, and product requirement before submitting."
+      text: "Please add your name, company, valid email, and product requirement before submitting."
     };
   }
 
@@ -89,7 +89,7 @@ export default async function RequestQuotePage({ searchParams }: RequestQuotePag
           </label>
           <label>
             Company
-            <input name="company_name" placeholder="Company name" />
+            <input name="company_name" placeholder="Company name" required />
           </label>
           <label>
             Phone / WhatsApp

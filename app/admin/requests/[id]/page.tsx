@@ -11,21 +11,8 @@ import { CharCounterTextarea } from "../../../shared/CharCounterTextarea";
 import { SubmitButton } from "../../../shared/SubmitButton";
 import { MAX_MESSAGE_LENGTH } from "../../../lib/constants";
 
-const statusOptions = [
-  "new",
-  "ai_structured",
-  "admin_review",
-  "need_more_info",
-  "sourcing_in_progress",
-  "quotation_preparing",
-  "quotation_sent",
-  "sample_discussion",
-  "negotiating",
-  "won",
-  "lost",
-  "closed",
-  "spam"
-];
+import { REQUEST_STATUSES } from "../../../lib/constants";
+import { formatStatus } from "../../../lib/form-utils";
 
 type AdminRequestDetailPageProps = {
   params: Promise<{ id: string }>;
@@ -87,7 +74,7 @@ export default async function AdminRequestDetailPage({
           <h1>{request.title}</h1>
           <p className="hero-copy">{request.description}</p>
           <div className="tag-row">
-            <span className="tag">{request.status.replaceAll("_", " ")}</span>
+            <span className="tag">{formatStatus(request.status)}</span>
             <span className="tag">{request.priority}</span>
             <span className="tag">{request.buyer}</span>
           </div>
@@ -112,11 +99,11 @@ export default async function AdminRequestDetailPage({
             <label>
               Status
               <select defaultValue={request.status} name="status">
-                {statusOptions.map((item) => (
-                  <option key={item} value={item}>
-                    {item.replaceAll("_", " ")}
-                  </option>
-                ))}
+                {REQUEST_STATUSES.map((item) => (
+                   <option key={item} value={item}>
+                     {formatStatus(item)}
+                   </option>
+                 ))}
               </select>
             </label>
             <label>

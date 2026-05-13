@@ -6,9 +6,7 @@ export const metadata = {
   description: "Admin request queue for prioritizing and assigning buyer sourcing requests."
 };
 
-function statusLabel(status: string) {
-  return status.replaceAll("_", " ");
-}
+import { formatStatus } from "../../lib/form-utils";
 
 export default async function AdminRequestsPage() {
   const requests = await getAdminRequestQueue();
@@ -54,7 +52,7 @@ export default async function AdminRequestsPage() {
                   {request.productName}
                   <small>{request.quantity}</small>
                 </span>
-                <span>{statusLabel(request.status)}</span>
+                <span>{formatStatus(request.status)}</span>
                 <span>{request.priority}</span>
                 <span>
                   {request.createdAt}

@@ -18,3 +18,34 @@ export const BUSINESS_TYPES = [
 export const BUSINESS_TYPE_VALUES: Set<string> = new Set(BUSINESS_TYPES.map((b) => b.value));
 
 export const INCOTERMS = ["EXW", "FOB", "CFR", "CIF", "DDP"] as const;
+
+export const REQUEST_STATUSES = [
+  "new",
+  "ai_structured",
+  "admin_review",
+  "need_more_info",
+  "sourcing_in_progress",
+  "quotation_preparing",
+  "quotation_sent",
+  "sample_discussion",
+  "negotiating",
+  "won",
+  "lost",
+  "closed",
+  "spam"
+] as const;
+
+export type RequestStatus = (typeof REQUEST_STATUSES)[number];
+
+export const QUOTATION_STATUSES = [
+  "draft",
+  "pending_approval",
+  "approved",
+  "sent_to_buyer",
+  "accepted",
+  "rejected",
+  "expired",
+  "cancelled"
+] as const;
+
+export type QuotationStatus = (typeof QUOTATION_STATUSES)[number];

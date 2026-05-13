@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { createPublicSupabaseClient } from "../lib/supabase/public";
+import { validateEmail } from "../lib/form-utils";
 
 function getFormValue(formData: FormData, key: string) {
   const value = formData.get(key);
@@ -9,9 +10,6 @@ function getFormValue(formData: FormData, key: string) {
   return typeof value === "string" ? value.trim() : "";
 }
 
-function isValidEmail(value: string) {
-  return /^[^\s@]{2,}@[^\s@]{3,}\.[a-zA-Z]{2,}$/.test(value);
-}
 
 export async function createPublicInquiry(formData: FormData) {
   const supabase = createPublicSupabaseClient();
@@ -24,8 +22,9 @@ export async function createPublicInquiry(formData: FormData) {
   const email = getFormValue(formData, "email");
   const productSlug = getFormValue(formData, "product_slug");
   const productName = getFormValue(formData, "product_name");
+  const companyName = getFormValue(formData, "company_name");
 
-  if (!fullName || !isValidEmail(email) || !productName) {
+  if (!fullName || !validateEmail(email) || !productName || !companyName) {
     redirect("/request-quote?status=missing-fields");
   }
 

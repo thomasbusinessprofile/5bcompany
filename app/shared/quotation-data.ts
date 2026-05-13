@@ -112,7 +112,7 @@ export async function getSentQuotationsForRequest(requestId: string): Promise<Qu
     .from("quotations")
     .select("id")
     .eq("request_id", requestId)
-    .in("status", ["sent", "accepted", "rejected"])
+    .in("status", ["sent", "sent_to_buyer", "accepted", "rejected"])
     .order("created_at", { ascending: false });
 
   const quotes = await Promise.all(

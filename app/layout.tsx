@@ -37,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="vi">
       <body>
         <header className="site-header">
           <Link className="brand" href="/" aria-label={`${company.shortName} home`}>

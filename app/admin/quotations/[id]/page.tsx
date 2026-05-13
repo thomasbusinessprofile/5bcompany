@@ -120,10 +120,15 @@ export default async function AdminQuotationPage({ params, searchParams }: Admin
               <p>
                 {quotation.currency} {quotation.subtotal.toLocaleString("en-US", { maximumFractionDigits: 2 })}
               </p>
+              {quotation.subtotal === 0 && (
+                <p className="form-note" style={{ color: "#b3261e", fontWeight: "bold" }}>
+                  Warning: Subtotal is 0. Please enter quantity and price.
+                </p>
+              )}
             </div>
-            <div>
+            <div className="admin-internal-warning">
               <strong>Guardrail</strong>
-              <p>Do not send this draft as an official quotation until approved.</p>
+              <p>Do not send this draft as an official quotation until approved. Price and lead time are subject to change.</p>
             </div>
           </div>
           <div className="cta-row">
