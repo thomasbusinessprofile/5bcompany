@@ -1025,11 +1025,138 @@ p {
   .primary-link, .secondary-link {
     width: 100%;
   }
-  
+
   .cta-row {
     flex-direction: column;
     gap: 12px;
     width: 100%;
+  }
+}
+
+/* Tight mobile (≤480px) — shrink oversized desktop sizing */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 28px !important;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .hero-copy {
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    margin-bottom: 14px;
+  }
+
+  .eyebrow::before {
+    width: 24px;
+  }
+
+  .page-shell {
+    padding: 28px 16px;
+  }
+
+  .home-shell {
+    gap: 56px;
+  }
+
+  .hero {
+    gap: 28px;
+  }
+
+  .hero-image-container {
+    height: 200px;
+    border-radius: var(--radius-md);
+  }
+
+  .page-card,
+  .request-checklist {
+    padding: 20px;
+    border-radius: var(--radius-md);
+  }
+
+  .metric {
+    padding: 18px;
+  }
+
+  .metric strong {
+    font-size: 26px;
+  }
+
+  .metric span {
+    font-size: 12px;
+  }
+
+  .site-header {
+    padding: 14px 16px;
+    gap: 14px;
+  }
+
+  .brand-mark {
+    height: 38px;
+    width: 38px;
+    font-size: 14px;
+  }
+
+  .brand strong {
+    font-size: 16px;
+  }
+
+  .site-nav a,
+  .nav-link {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .primary-link,
+  .secondary-link {
+    min-height: 46px;
+    font-size: 14px;
+    padding: 0 18px;
+  }
+
+  .ghost-link {
+    min-height: 40px;
+    padding: 0 14px;
+    font-size: 13px;
+  }
+
+  .metric-grid,
+  .category-summary-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .product-detail-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .product-hero-image {
+    height: 220px;
+  }
+
+  .summary-tile-image {
+    height: 100px;
+  }
+
+  .site-footer {
+    padding: 36px 16px;
+    gap: 28px;
+  }
+
+  .site-footer h2 {
+    font-size: 13px;
+    margin-bottom: 10px;
   }
 }
 
