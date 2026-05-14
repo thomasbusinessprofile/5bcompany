@@ -14,8 +14,8 @@ const materials = [
     title: "Bamboo",
     body:
       "Vietnamese moso and luong bamboo grow back in 3–5 years from the same root system — no replanting, no clear-cutting. Our partner farms harvest selectively, leaving 30%+ standing biomass each cycle.",
-    image: "/images/bamboo_forest.png",
-    alt: "Bamboo grove in northern Vietnam"
+    image: "/images/bamboo_poles.jpg",
+    alt: "Selectively harvested bamboo poles"
   },
   {
     eyebrow: "Circular",
@@ -30,8 +30,8 @@ const materials = [
     title: "Craft villages",
     body:
       "Phu Vinh has woven bamboo for 400 years. Bat Trang has fired ceramic since the 14th century. Bao Loc has reeled silk for generations. We give these villages a global market without industrialising the craft out of them.",
-    image: "/images/quality_control.png",
-    alt: "Craftsperson inspecting woven bamboo"
+    image: "/images/rattan_furniture.jpg",
+    alt: "Hand-woven rattan furniture from a Vietnamese craft village"
   }
 ];
 
