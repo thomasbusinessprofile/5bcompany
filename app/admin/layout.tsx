@@ -20,6 +20,7 @@ const adminTabs = [
   { href: "/admin/tasks", label: "Tasks" },
   { href: "/admin/email/compose", label: "Email" },
   { href: "/admin/quotations", label: "Quotations" },
+  { href: "/admin/contracts", label: "Contracts" },
   { href: "/admin/products", label: "Products" },
   { href: "/admin/articles", label: "Articles" }
 ];
