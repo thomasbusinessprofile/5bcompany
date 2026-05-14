@@ -1,4 +1,4 @@
-import { saveProduct } from "./actions";
+import { deleteProduct, saveProduct } from "./actions";
 import { getProductCmsData } from "../../shared/product-cms-data";
 
 export const metadata = {
@@ -11,18 +11,10 @@ type AdminProductsPageProps = {
 };
 
 function messageFor(status?: string) {
-  if (status === "saved") {
-    return { tone: "success", text: "Product saved." };
-  }
-
-  if (status === "missing-fields") {
-    return { tone: "error", text: "Product name and slug are required." };
-  }
-
-  if (status === "save-error") {
-    return { tone: "error", text: "Product could not be saved. Check permissions and try again." };
-  }
-
+  if (status === "saved") return { tone: "success", text: "Product saved." };
+  if (status === "deleted") return { tone: "success", text: "Product deleted." };
+  if (status === "missing-fields") return { tone: "error", text: "Product name and slug are required." };
+  if (status === "save-error") return { tone: "error", text: "Product could not be saved. Check permissions and try again." };
   return null;
 }
 
@@ -59,6 +51,11 @@ export default async function AdminProductsPage({ searchParams }: AdminProductsP
                   href={`/admin/products?edit=${product.id}`}
                   key={product.id}
                 >
+                  {product.images[0] ? (
+                    <div className="cms-card-thumb">
+                      <img alt="" src={product.images[0]} />
+                    </div>
+                  ) : null}
                   <strong>{product.name}</strong>
                   <span className="muted">{product.slug}</span>
                   <span className={`status-pill ${product.status}`}>{product.status}</span>
@@ -102,47 +99,90 @@ export default async function AdminProductsPage({ searchParams }: AdminProductsP
           </label>
           <label>
             Short description
-            <textarea defaultValue={editing?.shortDescription ?? ""} name="short_description" />
+            <textarea defaultValue={editing?.shortDescription ?? ""} name="short_description" rows={2} />
           </label>
           <label>
             Long description
-            <textarea name="long_description" />
+            <textarea defaultValue={editing?.longDescription ?? ""} name="long_description" rows={5} />
           </label>
           <label>
-            Specifications
-            <textarea name="specifications" placeholder="One item per line or comma separated" />
+            Images (one URL per line, e.g. /images/bamboo_fence.jpg)
+            <textarea
+              defaultValue={editing?.images.join("\n") ?? ""}
+              name="images"
+              placeholder="/images/your-product.jpg"
+              rows={3}
+            />
+          </label>
+          {editing && editing.images.length > 0 ? (
+            <div className="image-preview-row">
+              {editing.images.map((url) => (
+                <img alt="" key={url} src={url} />
+              ))}
+            </div>
+          ) : null}
+          <label>
+            Specifications (one item per line or comma-separated)
+            <textarea
+              defaultValue={editing?.specifications.join("\n") ?? ""}
+              name="specifications"
+              rows={4}
+            />
           </label>
           <label>
-            Applications
-            <textarea name="applications" placeholder="One item per line or comma separated" />
+            Applications (one item per line or comma-separated)
+            <textarea
+              defaultValue={editing?.applications.join("\n") ?? ""}
+              name="applications"
+              rows={3}
+            />
           </label>
           <label>
-            Packing options
-            <textarea name="packing_options" placeholder="One item per line or comma separated" />
+            Packing options (one item per line or comma-separated)
+            <textarea
+              defaultValue={editing?.packingOptions.join("\n") ?? ""}
+              name="packing_options"
+              rows={3}
+            />
           </label>
           <label>
-            Documents
-            <textarea name="documents" placeholder="One item per line or comma separated" />
+            Documents (CO, FSC, BSCI… one per line)
+            <textarea
+              defaultValue={editing?.documents.join("\n") ?? ""}
+              name="documents"
+              rows={3}
+            />
           </label>
           <label>
             MOQ
-            <input name="moq" placeholder="Contact for details..." />
+            <input defaultValue={editing?.moq ?? ""} name="moq" placeholder="e.g. 1 × 40HQ" />
           </label>
           <label>
             Lead time
-            <input name="lead_time" placeholder="Subject to confirmed specification..." />
+            <input
+              defaultValue={editing?.leadTime ?? ""}
+              name="lead_time"
+              placeholder="e.g. 21–30 days from confirmed order"
+            />
           </label>
           <label>
             SEO title
-            <input name="seo_title" />
+            <input defaultValue={editing?.seoTitle ?? ""} name="seo_title" />
           </label>
           <label>
             SEO description
-            <textarea name="seo_description" />
+            <textarea defaultValue={editing?.seoDescription ?? ""} name="seo_description" rows={2} />
           </label>
-          <button className="primary-link" type="submit">
-            Save product
-          </button>
+          <button className="primary-link" type="submit">Save product</button>
+
+          {editing ? (
+            <div style={{ marginTop: 12, display: "flex", gap: 12, alignItems: "center" }}>
+              <a className="secondary-link" href={`/products/${editing.slug}`} rel="noopener noreferrer" target="_blank">
+                View on site →
+              </a>
+              <a className="ghost-link" href="/admin/products">Cancel edit</a>
+            </div>
+          ) : null}
         </form>
         <aside className="page-card">
           <h2>Quick tips</h2>
@@ -150,8 +190,19 @@ export default async function AdminProductsPage({ searchParams }: AdminProductsP
             <li>Click a card above to load a product into this form.</li>
             <li>Slug becomes the URL <code>/products/&lt;slug&gt;</code>.</li>
             <li>Status &quot;Draft&quot; hides the product from the public catalogue.</li>
-            <li>List items (specifications, applications, packing, documents) accept one per line or comma-separated.</li>
+            <li>List items accept one per line or comma-separated.</li>
+            <li>Image URLs are relative to <code>/public</code>, e.g. <code>/images/bamboo_fence.jpg</code>, or full external URLs.</li>
           </ul>
+
+          {editing ? (
+            <>
+              <h2 style={{ marginTop: 28 }}>Danger zone</h2>
+              <form action={deleteProduct}>
+                <input name="product_id" type="hidden" value={editing.id} />
+                <button className="ghost-link danger" type="submit">Delete product</button>
+              </form>
+            </>
+          ) : null}
         </aside>
       </section>
     </div>

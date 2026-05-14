@@ -43,6 +43,7 @@ export async function saveProduct(formData: FormData) {
     applications: listValue(formData, "applications"),
     category_id: value(formData, "category_id") || null,
     documents: listValue(formData, "documents"),
+    images: listValue(formData, "images"),
     lead_time: value(formData, "lead_time") || null,
     long_description: value(formData, "long_description") || null,
     moq: value(formData, "moq") || null,
@@ -68,4 +69,15 @@ export async function saveProduct(formData: FormData) {
   revalidatePath(`/products/${slug}`);
   revalidatePath("/admin/products");
   redirect("/admin/products?status=saved");
+}
+
+export async function deleteProduct(formData: FormData) {
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) redirect("/login");
+  const id = value(formData, "product_id");
+  if (!id) redirect("/admin/products");
+  await supabase.from("products").delete().eq("id", id);
+  revalidatePath("/products");
+  revalidatePath("/admin/products");
+  redirect("/admin/products?status=deleted");
 }
