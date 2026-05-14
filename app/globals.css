@@ -228,6 +228,43 @@ p {
   background: var(--green-soft);
 }
 
+/* ───── Contracts — line items editor + status pills ───── */
+.line-items-editor { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 10px; }
+.li-row {
+  display: grid;
+  grid-template-columns: 2fr 80px 70px 110px 110px 28px;
+  gap: 8px;
+  align-items: start;
+  padding: 6px 4px;
+  border-bottom: 1px solid var(--line);
+}
+.li-row:last-of-type { border-bottom: none; }
+.li-row-head { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); border-bottom: 1px solid var(--line); }
+.li-name { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.li-desc { font-size: 12px; color: var(--muted); }
+.li-sub { padding: 8px 0; font-weight: 600; text-align: right; }
+.li-actions { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; }
+.li-total { font-size: 14px; color: var(--ink); }
+@media (max-width: 768px) {
+  .li-row { grid-template-columns: 1fr; gap: 4px; padding: 10px 0; }
+  .li-row-head { display: none; }
+}
+
+.contract-row {
+  display: grid;
+  grid-template-columns: 130px 130px 1.5fr 130px 90px 90px;
+  gap: 12px;
+  align-items: center;
+}
+@media (max-width: 768px) { .contract-row { grid-template-columns: 1fr; gap: 4px; } }
+
+.status-pill.draft { background: #f1f5f9; color: #475569; }
+.status-pill.sent { background: #dbeafe; color: #1e3a8a; }
+.status-pill.viewed { background: #fef3c7; color: #854d0e; }
+.status-pill.signed { background: var(--green-soft); color: var(--green); }
+.status-pill.declined, .status-pill.expired { background: #fee2e2; color: #991b1b; }
+.status-pill.superseded { background: #ede9fe; color: #5b21b6; }
+
 /* ───── Auth (login / register) — strip marketing chrome ───── */
 body:has(.auth-shell) .site-header,
 body:has(.auth-shell) .site-footer,
