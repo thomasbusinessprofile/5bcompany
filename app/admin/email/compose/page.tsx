@@ -16,6 +16,8 @@ type Props = {
     contact?: string;
     deal?: string;
     template?: string;
+    template_subject?: string;
+    template_body?: string;
     status?: string;
     message?: string;
   }>;
@@ -29,7 +31,15 @@ function flash(status?: string, message?: string) {
 }
 
 export default async function ComposePage({ searchParams }: Props) {
-  const { contact: contactId, deal: dealId, template: templateId, status, message } = await searchParams;
+  const {
+    contact: contactId,
+    deal: dealId,
+    template: templateId,
+    template_subject: prefilledSubject,
+    template_body: prefilledBody,
+    status,
+    message
+  } = await searchParams;
   const [templates, contacts, contact, deal, template] = await Promise.all([
     listEmailTemplates(),
     listContacts(),
@@ -44,7 +54,8 @@ export default async function ComposePage({ searchParams }: Props) {
   return (
     <div className="page-shell">
       <p className="eyebrow">
-        <Link href="/admin/email/templates">Manage templates →</Link>
+        <Link href="/admin/email/library">Email playbook</Link> ·{" "}
+        <Link href="/admin/email/templates">Manage my templates</Link>
       </p>
       <section className="section-title wide-title">
         <p className="eyebrow">CRM · Email</p>
@@ -122,7 +133,7 @@ export default async function ComposePage({ searchParams }: Props) {
           <input
             name="subject"
             required
-            defaultValue={template?.subject ?? ""}
+            defaultValue={template?.subject ?? prefilledSubject ?? ""}
             placeholder="Subject line — supports {{variables}}"
           />
         </label>
@@ -146,7 +157,7 @@ export default async function ComposePage({ searchParams }: Props) {
           <textarea
             name="body_text"
             rows={10}
-            defaultValue={template?.bodyText ?? ""}
+            defaultValue={template?.bodyText ?? prefilledBody ?? ""}
             placeholder={`Hi {{first_name}},\n\n…\n\nBest,\n5B Trading`}
           />
         </label>
