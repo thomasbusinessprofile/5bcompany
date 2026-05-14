@@ -6,16 +6,20 @@ import { validateEmail } from "../lib/form-utils";
 
 function getFormValue(formData: FormData, key: string) {
   const value = formData.get(key);
-
   return typeof value === "string" ? value.trim() : "";
 }
 
-
 export async function createPublicInquiry(formData: FormData) {
   const supabase = createPublicSupabaseClient();
-
   if (!supabase) {
     redirect("/request-quote?status=config-error");
+  }
+
+  // Honeypot — bots fill hidden fields. Silently pretend success so the bot
+  // doesn't retry, but never insert.
+  const honeypot = getFormValue(formData, "website");
+  if (honeypot) {
+    redirect("/request-quote?status=submitted");
   }
 
   const fullName = getFormValue(formData, "full_name");
@@ -29,19 +33,28 @@ export async function createPublicInquiry(formData: FormData) {
   }
 
   let productId: string | null = null;
-
   if (productSlug) {
     const { data } = await supabase.from("products").select("id").eq("slug", productSlug).maybeSingle();
     productId = data?.id ?? null;
   }
 
+  // Stitch volume_stage + incoterm into the message body so they survive
+  // without a schema change. They show up clearly in the admin RFQ detail.
+  const volumeStage = getFormValue(formData, "volume_stage");
+  const incoterm = getFormValue(formData, "incoterm");
+  const rawNotes = getFormValue(formData, "message");
+  const extras: string[] = [];
+  if (volumeStage) extras.push(`Volume stage: ${volumeStage}`);
+  if (incoterm) extras.push(`Incoterm: ${incoterm}`);
+  const composedMessage = [extras.join("\n"), rawNotes].filter(Boolean).join("\n\n") || null;
+
   const { error } = await supabase.from("inquiries").insert({
-    company_name: getFormValue(formData, "company_name") || null,
+    company_name: companyName || null,
     country: getFormValue(formData, "country") || null,
     destination_port: getFormValue(formData, "destination_port") || null,
     email,
     full_name: fullName,
-    message: getFormValue(formData, "message") || null,
+    message: composedMessage,
     packing_requirement: getFormValue(formData, "packing_requirement") || null,
     phone: getFormValue(formData, "phone") || null,
     product_id: productId,
