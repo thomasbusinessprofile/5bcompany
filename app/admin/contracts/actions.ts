@@ -103,7 +103,8 @@ export async function createContract(formData: FormData) {
     .maybeSingle();
 
   if (error || !data) {
-    redirect("/admin/contracts/new?status=save-error");
+    const msg = error?.message ?? "unknown error";
+    redirect(`/admin/contracts/new?status=save-error&message=${encodeURIComponent(msg)}`);
   }
 
   await supabase.from("contract_events").insert({
