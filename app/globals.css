@@ -1187,6 +1187,50 @@ main {
   .article-prose { font-size: 15px; line-height: 1.7; }
 }
 
+/* ───── Admin subnav ───── */
+.admin-subnav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px 24px;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.admin-subnav-link {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  background: transparent;
+  transition: var(--transition);
+}
+.admin-subnav-link:hover { background: var(--green-soft); color: var(--green); }
+.admin-subnav-link.nav-active { background: var(--green); color: #fff; }
+@media (max-width: 768px) {
+  .admin-subnav { padding: 10px 12px; overflow-x: auto; flex-wrap: nowrap; }
+  .admin-subnav-link { white-space: nowrap; }
+}
+
+/* ───── CRM bits ───── */
+.search-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.search-bar input {
+  flex: 1;
+}
+.contact-row { display: grid; grid-template-columns: 1.5fr 1.3fr 80px; gap: 12px; align-items: center; }
+@media (max-width: 768px) {
+  .contact-row { grid-template-columns: 1fr; gap: 4px; }
+}
+.ghost-link.danger { color: #b91c1c; }
+.ghost-link.danger:hover { background: #fee2e2; }
+
 /* ───── WhatsApp FAB ───── */
 .whatsapp-fab {
   position: fixed;
