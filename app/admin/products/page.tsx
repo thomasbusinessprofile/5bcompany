@@ -42,8 +42,36 @@ export default async function AdminProductsPage({ searchParams }: AdminProductsP
           sourcing forms.
         </p>
       </section>
+      <section className="page-card">
+        <div className="cms-list-header">
+          <h2>Products ({products.length})</h2>
+          <a className="primary-link" href="/admin/products">+ New product</a>
+        </div>
+        {products.length === 0 ? (
+          <p className="muted">No products yet. Use the form below to create one.</p>
+        ) : (
+          <div className="cms-grid">
+            {products.map((product) => {
+              const isEditing = editing?.id === product.id;
+              return (
+                <a
+                  className={`cms-card ${isEditing ? "active" : ""}`}
+                  href={`/admin/products?edit=${product.id}`}
+                  key={product.id}
+                >
+                  <strong>{product.name}</strong>
+                  <span className="muted">{product.slug}</span>
+                  <span className={`status-pill ${product.status}`}>{product.status}</span>
+                </a>
+              );
+            })}
+          </div>
+        )}
+      </section>
+
       <section className="split">
         <form action={saveProduct} className="page-card request-form">
+          <h2>{editing ? `Edit: ${editing.name}` : "New product"}</h2>
           {message ? <p className={`form-status ${message.tone}`}>{message.text}</p> : null}
           <input name="product_id" type="hidden" value={editing?.id ?? ""} />
           <label>
@@ -117,18 +145,13 @@ export default async function AdminProductsPage({ searchParams }: AdminProductsP
           </button>
         </form>
         <aside className="page-card">
-          <h2>Products</h2>
-          <div className="table-list">
-            {products.map((product) => (
-              <div className="table-row" key={product.id}>
-                <a className="row-link" href={`/admin/products?edit=${product.id}`}>
-                  {product.name}
-                </a>
-                <span>{product.status}</span>
-                <span>{product.slug}</span>
-              </div>
-            ))}
-          </div>
+          <h2>Quick tips</h2>
+          <ul className="muted" style={{ paddingLeft: 18, lineHeight: 1.7 }}>
+            <li>Click a card above to load a product into this form.</li>
+            <li>Slug becomes the URL <code>/products/&lt;slug&gt;</code>.</li>
+            <li>Status &quot;Draft&quot; hides the product from the public catalogue.</li>
+            <li>List items (specifications, applications, packing, documents) accept one per line or comma-separated.</li>
+          </ul>
         </aside>
       </section>
     </div>

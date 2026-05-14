@@ -43,9 +43,37 @@ export default async function AdminArticlesPage({ searchParams }: AdminArticlesP
           product pages and structured request flows.
         </p>
       </section>
+      <section className="page-card">
+        <div className="cms-list-header">
+          <h2>Articles ({articles.length})</h2>
+          <a className="primary-link" href="/admin/articles">+ New article</a>
+        </div>
+        {articles.length === 0 ? (
+          <p className="muted">No articles yet. Use the form below to create one.</p>
+        ) : (
+          <div className="cms-grid">
+            {articles.map((article) => {
+              const isEditing = editing?.id === article.id;
+              return (
+                <a
+                  className={`cms-card ${isEditing ? "active" : ""}`}
+                  href={`/admin/articles?edit=${article.id}`}
+                  key={article.id}
+                >
+                  <strong>{article.title}</strong>
+                  <span className="muted">{article.slug}</span>
+                  <span className={`status-pill ${article.status}`}>{article.status}</span>
+                </a>
+              );
+            })}
+          </div>
+        )}
+      </section>
+
       <section className="split">
         <form action={saveArticle} className="page-card request-form">
           {message ? <p className={`form-status ${message.tone}`}>{message.text}</p> : null}
+          <h2>{editing ? `Edit: ${editing.title}` : "New article"}</h2>
           <input name="article_id" type="hidden" value={editing?.id ?? ""} />
           <label>
             Title
@@ -112,18 +140,14 @@ export default async function AdminArticlesPage({ searchParams }: AdminArticlesP
           </button>
         </form>
         <aside className="page-card">
-          <h2>Articles</h2>
-          <div className="table-list">
-            {articles.map((article) => (
-              <div className="table-row" key={article.id}>
-                <a className="row-link" href={`/admin/articles?edit=${article.id}`}>
-                  {article.title}
-                </a>
-                <span>{article.status}</span>
-                <span>{article.slug}</span>
-              </div>
-            ))}
-          </div>
+          <h2>Quick tips</h2>
+          <ul className="muted" style={{ paddingLeft: 18, lineHeight: 1.7 }}>
+            <li>Click a card above to load an article into this form.</li>
+            <li>Slug becomes the URL <code>/articles/&lt;slug&gt;</code>.</li>
+            <li>Body supports markdown: paragraphs separated by blank line, <code>**bold**</code>, <code>- bullet</code>.</li>
+            <li>Set Status to &quot;Published&quot; to make it visible publicly.</li>
+            <li>Hero image path is relative to <code>/public</code>, e.g. <code>/images/article-foo.jpg</code>.</li>
+          </ul>
         </aside>
       </section>
     </div>
