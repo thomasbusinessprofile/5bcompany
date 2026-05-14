@@ -24,11 +24,14 @@ export async function saveActivity(formData: FormData) {
   const occurredInput = val(formData, "occurred_at");
   const dueInput = val(formData, "due_at");
 
+  const dealId = val(formData, "deal_id") || null;
+
   const payload = {
     type,
     subject: val(formData, "subject") || null,
     body: val(formData, "body") || null,
     contact_id: contactId,
+    deal_id: dealId,
     inquiry_id: val(formData, "inquiry_id") || null,
     occurred_at: occurredInput ? new Date(occurredInput).toISOString() : new Date().toISOString(),
     due_at: dueInput ? new Date(dueInput).toISOString() : null
@@ -44,6 +47,7 @@ export async function saveActivity(formData: FormData) {
   }
 
   if (contactId) revalidatePath(`/admin/contacts/${contactId}`);
+  if (dealId) revalidatePath(`/admin/deals/${dealId}`);
   revalidatePath("/admin/activities");
   revalidatePath("/admin/tasks");
 
