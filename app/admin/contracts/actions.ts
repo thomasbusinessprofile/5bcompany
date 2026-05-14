@@ -93,7 +93,7 @@ export async function createContract(formData: FormData) {
     delivery_window: val(formData, "delivery_window") || null,
     line_items: lineItems,
     terms_html: termsHtml,
-    owner_id: ctx.profileId
+    owner_id: ctx.profileId ?? null
   };
 
   const { data, error } = await supabase
