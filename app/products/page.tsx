@@ -53,22 +53,6 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         ))}
       </nav>
 
-      <section className="category-summary-grid" aria-label="Product category summaries">
-        {categories.map((item) => (
-          <article className="summary-tile" key={item.slug}>
-            {item.image && (
-              <div className="summary-tile-image">
-                <img alt={item.name} src={item.image} />
-              </div>
-            )}
-            <div className="summary-tile-content">
-              <h2>{item.name}</h2>
-              <p>{item.description}</p>
-            </div>
-          </article>
-        ))}
-      </section>
-
       <section className="catalogue-grid" aria-label="Product catalogue">
         {visibleProducts.length > 0 ? (
           visibleProducts.map((product) => (
