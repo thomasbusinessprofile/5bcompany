@@ -52,13 +52,19 @@ export function LineItemsEditor({ initial, currency }: Props) {
         <div className="li-row" key={i}>
           <div className="li-name">
             <input
+              aria-label={`Line ${i + 1} description`}
+              autoComplete="off"
+              name={`li_${i}_name`}
               onChange={(e) => update(i, { name: e.target.value })}
               placeholder="Bamboo fence roll 1.8 × 3 m, carbonised"
               type="text"
               value={r.name}
             />
             <input
+              aria-label={`Line ${i + 1} notes`}
+              autoComplete="off"
               className="li-desc"
+              name={`li_${i}_desc`}
               onChange={(e) => update(i, { description: e.target.value })}
               placeholder="Optional spec / SKU notes"
               type="text"
@@ -66,20 +72,29 @@ export function LineItemsEditor({ initial, currency }: Props) {
             />
           </div>
           <input
+            aria-label={`Line ${i + 1} quantity`}
+            autoComplete="off"
             min={0}
+            name={`li_${i}_qty`}
             onChange={(e) => update(i, { quantity: Number(e.target.value) })}
             step="any"
             type="number"
             value={r.quantity}
           />
           <input
+            aria-label={`Line ${i + 1} unit`}
+            autoComplete="off"
+            name={`li_${i}_unit`}
             onChange={(e) => update(i, { unit: e.target.value })}
             placeholder="pc / roll / kg"
             type="text"
             value={r.unit}
           />
           <input
+            aria-label={`Line ${i + 1} unit price`}
+            autoComplete="off"
             min={0}
+            name={`li_${i}_price`}
             onChange={(e) => update(i, { unit_price: Number(e.target.value) })}
             step="any"
             type="number"
