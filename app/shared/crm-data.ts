@@ -296,6 +296,131 @@ export async function listOpenTasks(): Promise<CrmActivity[]> {
   return ((data ?? []) as unknown as ActivityRow[]).map(toActivity);
 }
 
+export type DealStage = {
+  id: string;
+  name: string;
+  sortOrder: number;
+  winProbability: number;
+  isWon: boolean;
+  isLost: boolean;
+};
+
+export type Deal = {
+  id: string;
+  title: string;
+  stageId: string;
+  stageName?: string;
+  companyId: string | null;
+  companyName: string | null;
+  contactId: string | null;
+  contactName: string | null;
+  inquiryId: string | null;
+  valueUsd: number | null;
+  currency: string;
+  productSummary: string | null;
+  expectedCloseDate: string | null;
+  closedAt: string | null;
+  lostReason: string | null;
+  source: string | null;
+  ownerId: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type DealRow = {
+  id: string;
+  title: string;
+  stage_id: string;
+  company_id: string | null;
+  contact_id: string | null;
+  inquiry_id: string | null;
+  value_usd: string | number | null;
+  currency: string | null;
+  product_summary: string | null;
+  expected_close_date: string | null;
+  closed_at: string | null;
+  lost_reason: string | null;
+  source: string | null;
+  owner_id: string | null;
+  created_at: string;
+  updated_at: string;
+  crm_companies?: { name: string } | null;
+  crm_contacts?: { full_name: string } | null;
+  crm_deal_stages?: { name: string } | null;
+};
+
+const DEAL_SELECT =
+  "id, title, stage_id, company_id, contact_id, inquiry_id, value_usd, currency, product_summary, expected_close_date, closed_at, lost_reason, source, owner_id, created_at, updated_at, crm_companies(name), crm_contacts(full_name), crm_deal_stages(name)";
+
+function toDeal(row: DealRow): Deal {
+  return {
+    id: row.id,
+    title: row.title,
+    stageId: row.stage_id,
+    stageName: row.crm_deal_stages?.name,
+    companyId: row.company_id,
+    companyName: row.crm_companies?.name ?? null,
+    contactId: row.contact_id,
+    contactName: row.crm_contacts?.full_name ?? null,
+    inquiryId: row.inquiry_id,
+    valueUsd: row.value_usd === null ? null : Number(row.value_usd),
+    currency: row.currency ?? "USD",
+    productSummary: row.product_summary,
+    expectedCloseDate: row.expected_close_date,
+    closedAt: row.closed_at,
+    lostReason: row.lost_reason,
+    source: row.source,
+    ownerId: row.owner_id,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at
+  };
+}
+
+export async function listDealStages(): Promise<DealStage[]> {
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) return [];
+  const { data } = await supabase
+    .from("crm_deal_stages")
+    .select("id, name, sort_order, win_probability, is_won, is_lost")
+    .order("sort_order");
+  return (data ?? []).map((r) => ({
+    id: r.id as string,
+    name: r.name as string,
+    sortOrder: r.sort_order as number,
+    winProbability: r.win_probability as number,
+    isWon: r.is_won as boolean,
+    isLost: r.is_lost as boolean
+  }));
+}
+
+export async function listDeals(): Promise<Deal[]> {
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) return [];
+  const { data } = await supabase
+    .from("crm_deals")
+    .select(DEAL_SELECT)
+    .order("updated_at", { ascending: false });
+  return ((data ?? []) as unknown as DealRow[]).map(toDeal);
+}
+
+export async function getDealById(id: string): Promise<Deal | null> {
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) return null;
+  const { data } = await supabase.from("crm_deals").select(DEAL_SELECT).eq("id", id).maybeSingle();
+  return data ? toDeal(data as unknown as DealRow) : null;
+}
+
+export async function listDealsForContact(contactId: string): Promise<Deal[]> {
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) return [];
+  const { data } = await supabase
+    .from("crm_deals")
+    .select(DEAL_SELECT)
+    .eq("contact_id", contactId)
+    .order("updated_at", { ascending: false });
+  return ((data ?? []) as unknown as DealRow[]).map(toDeal);
+}
+
 export async function listTags() {
   const supabase = await createSupabaseServerClient();
   if (!supabase) return [];
