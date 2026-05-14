@@ -1451,6 +1451,30 @@ main {
 .status-pill.published { background: var(--green-soft); color: var(--green); }
 .status-pill.draft { background: #f1f5f9; color: #64748b; }
 
+.cms-card-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--paper);
+  margin-bottom: 4px;
+}
+.cms-card-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.image-preview-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 4px 0 12px;
+}
+.image-preview-row img {
+  width: 84px;
+  height: 84px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+}
+
 /* ───── Pipeline / Kanban ───── */
 .pipeline-actions { margin-bottom: 18px; display: flex; gap: 12px; }
 
