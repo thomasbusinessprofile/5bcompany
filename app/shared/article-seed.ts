@@ -722,27 +722,27 @@ export const articleMeta: Record<string, ArticleMeta> = {
   "evfta-vietnam-eu-tariff-advantages": {
     publishedAt: "2026-01-08",
     category: "Trade & logistics",
-    image: "/images/warehouse_loading.jpg"
+    image: "/images/article-evfta.jpg"
   },
   "china-plus-one-vietnam-2026": {
     publishedAt: "2026-01-15",
     category: "Market insights",
-    image: "/images/warehouse_loading.jpg"
+    image: "/images/article-china-plus-one.jpg"
   },
   "haiphong-vs-hcmc-port-export-guide": {
     publishedAt: "2026-01-22",
     category: "Trade & logistics",
-    image: "/images/warehouse_loading.jpg"
+    image: "/images/article-ports.jpg"
   },
   "csrd-eu-due-diligence-vietnam": {
     publishedAt: "2026-02-04",
     category: "Compliance",
-    image: "/images/quality_control.png"
+    image: "/images/article-csrd.jpg"
   },
   "bamboo-charcoal-buyer-grades": {
     publishedAt: "2026-02-12",
     category: "Materials & craft",
-    image: "/images/charcoal_biochar.png"
+    image: "/images/article-charcoal-grades.jpg"
   },
   "rattan-furniture-vietnam-vs-indonesia": {
     publishedAt: "2026-02-20",
