@@ -247,7 +247,12 @@ body:has(.auth-shell) main { display: contents; }
     var(--paper);
 }
 .auth-card-wide { max-width: 560px; }
-.auth-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.auth-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+}
+.auth-row > label { min-width: 0; }
 @media (max-width: 480px) { .auth-row { grid-template-columns: 1fr; } }
 .auth-card select {
   padding: 11px 14px;
@@ -288,7 +293,12 @@ body:has(.auth-shell) main { display: contents; }
 
 .auth-form { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
 .auth-form label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: var(--ink); }
-.auth-form input {
+.auth-form input,
+.auth-form select,
+.auth-card select {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   padding: 11px 14px;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
