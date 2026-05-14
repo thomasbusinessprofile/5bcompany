@@ -13,6 +13,7 @@ const adminTabs = [
   { href: "/admin/pipeline", label: "Pipeline" },
   { href: "/admin/activities", label: "Activities" },
   { href: "/admin/tasks", label: "Tasks" },
+  { href: "/admin/email/compose", label: "Email" },
   { href: "/admin/quotations", label: "Quotations" },
   { href: "/admin/products", label: "Products" },
   { href: "/admin/articles", label: "Articles" }
