@@ -13,32 +13,9 @@ export type Article = {
   title: string;
 };
 
-const fallbackArticles: Article[] = [
-  {
-    body: "Confirm roll height, roll length, finish, packing, retail label requirements, destination port, and target timeline before admin prepares quotation.",
-    excerpt:
-      "Prepare roll size, quantity, destination port, packing label needs, and timeline before requesting a quotation.",
-    id: "fallback-bamboo",
-    keyword: "Vietnam bamboo fence supplier",
-    seoDescription: "Buyer guide for sourcing bamboo fence from Vietnam with structured request inputs.",
-    seoTitle: "How to source bamboo fence from Vietnam",
-    slug: "how-to-source-bamboo-fence-from-vietnam",
-    status: "published",
-    title: "How to source bamboo fence from Vietnam"
-  },
-  {
-    body: "Prepare thickness, width, roll weight or length, hand roll or machine roll type, color, packing, monthly quantity, and destination port before quotation.",
-    excerpt:
-      "Clarify thickness, width, length, roll type, color, and monthly quantity before quote preparation.",
-    id: "fallback-stretch",
-    keyword: "Stretch film supplier Vietnam",
-    seoDescription: "Checklist for buyers preparing stretch film sourcing requests from Vietnam.",
-    seoTitle: "Stretch film sourcing checklist",
-    slug: "stretch-film-sourcing-checklist",
-    status: "published",
-    title: "Stretch film sourcing checklist"
-  }
-];
+import { seedArticles } from "./article-seed";
+
+const fallbackArticles: Article[] = seedArticles;
 
 type ArticleRow = {
   body: string | null;
