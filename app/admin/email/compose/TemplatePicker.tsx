@@ -21,7 +21,9 @@ export function TemplatePicker({
 
   return (
     <select
+      aria-label="Email template picker"
       defaultValue={selected ?? ""}
+      name="_template_picker"
       onChange={(e) => onChange(e.currentTarget.value)}
     >
       <option value="">— Blank email —</option>
