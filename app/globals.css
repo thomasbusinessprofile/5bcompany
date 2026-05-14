@@ -259,6 +259,16 @@ p {
 @media (max-width: 768px) { .contract-row { grid-template-columns: 1fr; gap: 4px; } }
 
 .status-pill.draft { background: #f1f5f9; color: #475569; }
+.status-pill.new { background: #dbeafe; color: #1e3a8a; }
+.status-pill.need_more_info { background: #fef3c7; color: #854d0e; }
+.status-pill.quotation_preparing { background: #ede9fe; color: #5b21b6; }
+.status-pill.negotiating { background: #fde68a; color: #92400e; }
+.status-pill.won { background: var(--green-soft); color: var(--green); }
+.status-pill.lost { background: #fee2e2; color: #991b1b; }
+.metric-link { text-decoration: none; }
+.metric-link .metric { transition: var(--transition); cursor: pointer; }
+.metric-link:hover .metric { border-color: var(--green-light); transform: translateY(-1px); }
+.metric.metric-active { border-color: var(--green); background: var(--green-soft); }
 .status-pill.sent { background: #dbeafe; color: #1e3a8a; }
 .status-pill.viewed { background: #fef3c7; color: #854d0e; }
 .status-pill.signed { background: var(--green-soft); color: var(--green); }
