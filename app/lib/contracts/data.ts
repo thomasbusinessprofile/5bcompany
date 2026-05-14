@@ -47,7 +47,10 @@ type ContractRow = {
 const CONTRACT_COLUMNS =
   "id, contract_number, type, version, deal_id, contact_id, company_id, quotation_id, template_id, buyer_legal_name, buyer_address, buyer_tax_id, buyer_signer_name, buyer_signer_email, buyer_signer_title, currency, total_amount, tax_pct, incoterm, payment_terms, validity_until, delivery_window, line_items, terms_html, language, pdf_url, signed_pdf_url, status, share_token, share_token_expires_at, share_token_revoked_at, sent_at, viewed_at, signed_at, declined_at, signer_typed_name, signature_method, owner_id, created_at, updated_at";
 
-function toContract(row: ContractRow): Contract {
+export { CONTRACT_COLUMNS };
+export type { ContractRow };
+
+export function toContract(row: ContractRow): Contract {
   return {
     id: row.id,
     contractNumber: row.contract_number,
