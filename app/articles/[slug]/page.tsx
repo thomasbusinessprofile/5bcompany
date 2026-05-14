@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type React from "react";
 import { notFound } from "next/navigation";
 import { getPublicArticleBySlug, getPublicArticles } from "../../shared/article-data";
 
@@ -46,36 +47,58 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <div className="page-shell">
-      <article className="page-card">
+      <article className="page-card article-body">
         <p className="eyebrow">Insights</p>
         <h1>{article.title}</h1>
-        <p>{article.excerpt}</p>
-        <div className="detail-list">
-          <div>
-            <strong>Buyer checklist</strong>
-            <p>{article.body}</p>
-          </div>
-          <div>
-            <strong>SEO focus keyword</strong>
-            <p>{article.keyword || "No keyword set."}</p>
-          </div>
-          <div>
-            <strong>Internal link</strong>
-            <p>
-              Link buyers from article content to relevant product pages and a
-              structured request CTA.
-            </p>
-          </div>
-        </div>
+        <p className="lede">{article.excerpt}</p>
+        <ArticleBody body={article.body} />
         <div className="cta-row">
           <Link className="primary-link" href="/request-quote">
-            Create Request
+            Request a quote
           </Link>
           <Link className="secondary-link" href="/products">
-            View Products
+            View products
           </Link>
         </div>
       </article>
+    </div>
+  );
+}
+
+function renderInline(text: string): React.ReactNode[] {
+  const parts: React.ReactNode[] = [];
+  const regex = /\*\*([^*]+)\*\*/g;
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  let key = 0;
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+    parts.push(<strong key={key++}>{match[1]}</strong>);
+    lastIndex = regex.lastIndex;
+  }
+  if (lastIndex < text.length) parts.push(text.slice(lastIndex));
+  return parts;
+}
+
+function ArticleBody({ body }: { body: string }) {
+  const blocks = body.split(/\n\n+/).map((b) => b.trim()).filter(Boolean);
+  return (
+    <div className="article-prose">
+      {blocks.map((block, i) => {
+        if (block.startsWith("- ")) {
+          const items = block.split(/\n/).map((l) => l.replace(/^-\s*/, ""));
+          return (
+            <ul key={i}>
+              {items.map((item, j) => (
+                <li key={j}>{renderInline(item)}</li>
+              ))}
+            </ul>
+          );
+        }
+        return <p key={i}>{renderInline(block)}</p>;
+      })}
     </div>
   );
 }
