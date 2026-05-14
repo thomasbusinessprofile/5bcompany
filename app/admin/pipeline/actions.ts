@@ -2,7 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { safeInternalPath } from "../../lib/auth/safe-redirect";
 import { createSupabaseServerClient } from "../../lib/supabase/server";
+import { requireAdminRole } from "../../lib/auth/require-admin";
 
 function val(formData: FormData, key: string) {
   const item = formData.get(key);
@@ -19,6 +21,7 @@ function num(formData: FormData, key: string): number | null {
 export async function saveDeal(formData: FormData) {
   const supabase = await createSupabaseServerClient();
   if (!supabase) redirect("/login");
+  await requireAdminRole(supabase);
 
   const id = val(formData, "deal_id");
   const title = val(formData, "title");
@@ -49,13 +52,16 @@ export async function saveDeal(formData: FormData) {
   if (id) revalidatePath(`/admin/deals/${id}`);
   if (payload.contact_id) revalidatePath(`/admin/contacts/${payload.contact_id}`);
 
-  const redirectTo = val(formData, "redirect_to");
-  redirect(redirectTo || (id ? `/admin/deals/${id}` : "/admin/pipeline?status=saved"));
+  redirect(
+    safeInternalPath(val(formData, "redirect_to"))
+      ?? (id ? `/admin/deals/${id}` : "/admin/pipeline?status=saved")
+  );
 }
 
 export async function moveDealStage(formData: FormData) {
   const supabase = await createSupabaseServerClient();
   if (!supabase) redirect("/login");
+  await requireAdminRole(supabase);
 
   const dealId = val(formData, "deal_id");
   const stageId = val(formData, "stage_id");
@@ -64,12 +70,13 @@ export async function moveDealStage(formData: FormData) {
   await supabase.from("crm_deals").update({ stage_id: stageId }).eq("id", dealId);
   revalidatePath("/admin/pipeline");
   revalidatePath(`/admin/deals/${dealId}`);
-  redirect(val(formData, "redirect_to") || "/admin/pipeline");
+  redirect(safeInternalPath(val(formData, "redirect_to")) ??"/admin/pipeline");
 }
 
 export async function deleteDeal(formData: FormData) {
   const supabase = await createSupabaseServerClient();
   if (!supabase) redirect("/login");
+  await requireAdminRole(supabase);
 
   const id = val(formData, "deal_id");
   if (!id) redirect("/admin/pipeline");
@@ -82,6 +89,7 @@ export async function deleteDeal(formData: FormData) {
 export async function convertInquiryToDeal(formData: FormData) {
   const supabase = await createSupabaseServerClient();
   if (!supabase) redirect("/login");
+  await requireAdminRole(supabase);
 
   const inquiryId = val(formData, "inquiry_id");
   if (!inquiryId) redirect("/admin/requests");

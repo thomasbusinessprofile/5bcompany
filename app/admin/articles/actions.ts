@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "../../lib/supabase/server";
+import { requireAdminRole } from "../../lib/auth/require-admin";
 
 function value(formData: FormData, key: string) {
   const item = formData.get(key);
@@ -23,6 +24,8 @@ export async function saveArticle(formData: FormData) {
   if (!supabase) {
     redirect("/login");
   }
+
+  await requireAdminRole(supabase);
 
   const id = value(formData, "article_id");
   const title = value(formData, "title");

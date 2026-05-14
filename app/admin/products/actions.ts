@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "../../lib/supabase/server";
+import { requireAdminRole } from "../../lib/auth/require-admin";
 
 function value(formData: FormData, key: string) {
   const item = formData.get(key);
@@ -30,6 +31,8 @@ export async function saveProduct(formData: FormData) {
   if (!supabase) {
     redirect("/login");
   }
+
+  await requireAdminRole(supabase);
 
   const id = value(formData, "product_id");
   const name = value(formData, "name");
@@ -74,6 +77,7 @@ export async function saveProduct(formData: FormData) {
 export async function deleteProduct(formData: FormData) {
   const supabase = await createSupabaseServerClient();
   if (!supabase) redirect("/login");
+  await requireAdminRole(supabase);
   const id = value(formData, "product_id");
   if (!id) redirect("/admin/products");
   await supabase.from("products").delete().eq("id", id);

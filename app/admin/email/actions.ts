@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "../../lib/supabase/server";
+import { requireAdminRole } from "../../lib/auth/require-admin";
 import { applyTemplateVariables, sendEmail } from "../../lib/email/resend";
 import { company } from "../../shared/company";
 
@@ -11,15 +12,33 @@ function val(formData: FormData, key: string) {
   return typeof item === "string" ? item.trim() : "";
 }
 
-function defaultFrom() {
+// The `from` header is NEVER taken from form input — only env / company
+// config. Header injection (CRLF) would otherwise let an attacker forge
+// senders or inject extra recipients.
+function trustedFrom() {
   const configured = process.env.RESEND_FROM_EMAIL;
-  if (configured) return configured;
-  return `5B Trading <${company.email}>`;
+  const value = configured || `5B Trading <${company.email}>`;
+  if (/[\r\n]/.test(value)) {
+    throw new Error("RESEND_FROM_EMAIL contains CR/LF; refusing to send.");
+  }
+  return value;
+}
+
+function safeRecipientField(v: string | null): string | null {
+  if (!v) return null;
+  // Block CR/LF (header injection); block obvious garbage early.
+  if (/[\r\n\t\0]/.test(v)) return null;
+  return v;
+}
+
+function isValidEmail(v: string): boolean {
+  return /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(v);
 }
 
 export async function saveEmailTemplate(formData: FormData) {
   const supabase = await createSupabaseServerClient();
   if (!supabase) redirect("/login");
+  await requireAdminRole(supabase);
 
   const id = val(formData, "template_id");
   const name = val(formData, "name");
@@ -53,6 +72,7 @@ export async function saveEmailTemplate(formData: FormData) {
 export async function deleteEmailTemplate(formData: FormData) {
   const supabase = await createSupabaseServerClient();
   if (!supabase) redirect("/login");
+  await requireAdminRole(supabase);
   const id = val(formData, "template_id");
   if (id) await supabase.from("crm_email_templates").delete().eq("id", id);
   revalidatePath("/admin/email/templates");
@@ -62,23 +82,31 @@ export async function deleteEmailTemplate(formData: FormData) {
 export async function sendComposedEmail(formData: FormData) {
   const supabase = await createSupabaseServerClient();
   if (!supabase) redirect("/login");
+  await requireAdminRole(supabase);
 
   const to = val(formData, "to");
   const subjectRaw = val(formData, "subject");
   const htmlRaw = val(formData, "body_html");
   const textRaw = val(formData, "body_text");
 
-  if (!to || !subjectRaw || (!htmlRaw && !textRaw)) {
+  if (!to || !subjectRaw || (!htmlRaw && !textRaw) || !isValidEmail(to)) {
     redirect("/admin/email/compose?status=missing-fields");
+  }
+
+  // Subject and recipient fields must not contain CR/LF (header injection).
+  if (/[\r\n]/.test(subjectRaw)) {
+    redirect("/admin/email/compose?status=invalid-input");
   }
 
   const contactId = val(formData, "contact_id") || null;
   const dealId = val(formData, "deal_id") || null;
   const templateId = val(formData, "template_id") || null;
-  const cc = val(formData, "cc") || null;
-  const bcc = val(formData, "bcc") || null;
-  const replyTo = val(formData, "reply_to") || null;
-  const from = val(formData, "from") || defaultFrom();
+  const cc = safeRecipientField(val(formData, "cc") || null);
+  const bcc = safeRecipientField(val(formData, "bcc") || null);
+  const replyToInput = val(formData, "reply_to") || null;
+  const replyTo = replyToInput && isValidEmail(replyToInput) ? replyToInput : null;
+  // From is server-controlled — ignore any value submitted in the form.
+  const from = trustedFrom();
 
   // Pull contact for default vars merge.
   const vars: Record<string, string | null | undefined> = {

@@ -2,7 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { safeInternalPath } from "../../lib/auth/safe-redirect";
 import { createSupabaseServerClient } from "../../lib/supabase/server";
+import { requireAdminRole } from "../../lib/auth/require-admin";
 
 function val(formData: FormData, key: string) {
   const item = formData.get(key);
@@ -14,6 +16,7 @@ const TYPES = ["call", "email", "meeting", "whatsapp", "note", "task"] as const;
 export async function saveActivity(formData: FormData) {
   const supabase = await createSupabaseServerClient();
   if (!supabase) redirect("/login");
+  await requireAdminRole(supabase);
 
   const type = val(formData, "type");
   if (!TYPES.includes(type as (typeof TYPES)[number])) {
@@ -51,13 +54,13 @@ export async function saveActivity(formData: FormData) {
   revalidatePath("/admin/activities");
   revalidatePath("/admin/tasks");
 
-  const redirectTo = val(formData, "redirect_to");
-  redirect(redirectTo || "/admin/activities?status=saved");
+  redirect(safeInternalPath(val(formData, "redirect_to")) ?? "/admin/activities?status=saved");
 }
 
 export async function toggleTaskComplete(formData: FormData) {
   const supabase = await createSupabaseServerClient();
   if (!supabase) redirect("/login");
+  await requireAdminRole(supabase);
 
   const id = val(formData, "activity_id");
   if (!id) redirect("/admin/tasks");
@@ -69,12 +72,13 @@ export async function toggleTaskComplete(formData: FormData) {
   if (current.data?.contact_id) revalidatePath(`/admin/contacts/${current.data.contact_id}`);
   revalidatePath("/admin/tasks");
   revalidatePath("/admin/activities");
-  redirect(val(formData, "redirect_to") || "/admin/tasks");
+  redirect(safeInternalPath(val(formData, "redirect_to")) ??"/admin/tasks");
 }
 
 export async function deleteActivity(formData: FormData) {
   const supabase = await createSupabaseServerClient();
   if (!supabase) redirect("/login");
+  await requireAdminRole(supabase);
 
   const id = val(formData, "activity_id");
   if (!id) redirect("/admin/activities");
@@ -84,5 +88,5 @@ export async function deleteActivity(formData: FormData) {
   if (current.data?.contact_id) revalidatePath(`/admin/contacts/${current.data.contact_id}`);
   revalidatePath("/admin/activities");
   revalidatePath("/admin/tasks");
-  redirect(val(formData, "redirect_to") || "/admin/activities");
+  redirect(safeInternalPath(val(formData, "redirect_to")) ??"/admin/activities");
 }
