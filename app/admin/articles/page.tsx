@@ -1,5 +1,6 @@
 import { saveArticle } from "./actions";
 import { getCmsArticles } from "../../shared/article-data";
+import { ARTICLE_CATEGORIES } from "../../shared/article-seed";
 
 export const metadata = {
   title: "Admin Articles | 5B Trading",
@@ -62,12 +63,37 @@ export default async function AdminArticlesPage({ searchParams }: AdminArticlesP
             </select>
           </label>
           <label>
+            Category
+            <select defaultValue={editing?.category ?? ""} name="category">
+              <option value="">— Uncategorised —</option>
+              {ARTICLE_CATEGORIES.map((c) => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Published date
+            <input
+              defaultValue={editing?.publishedAt ? editing.publishedAt.slice(0, 10) : ""}
+              name="published_at"
+              type="date"
+            />
+          </label>
+          <label>
+            Hero image path
+            <input
+              defaultValue={editing?.image ?? ""}
+              name="image_url"
+              placeholder="/images/article-my-slug.jpg"
+            />
+          </label>
+          <label>
             Excerpt
             <textarea defaultValue={editing?.excerpt ?? ""} name="excerpt" />
           </label>
           <label>
-            Body
-            <textarea defaultValue={editing?.body ?? ""} name="body" />
+            Body (markdown — paragraphs separated by blank line, **bold**, - bullet)
+            <textarea defaultValue={editing?.body ?? ""} name="body" rows={16} />
           </label>
           <label>
             Focus keyword
