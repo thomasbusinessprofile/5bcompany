@@ -205,6 +205,97 @@ export async function getCompanyContacts(companyId: string): Promise<CrmContact[
   return ((data ?? []) as unknown as ContactRow[]).map(toContact);
 }
 
+export type ActivityType = "call" | "email" | "meeting" | "whatsapp" | "note" | "task";
+
+export type CrmActivity = {
+  id: string;
+  type: ActivityType;
+  subject: string | null;
+  body: string | null;
+  contactId: string | null;
+  contactName: string | null;
+  companyId: string | null;
+  inquiryId: string | null;
+  ownerId: string | null;
+  occurredAt: string;
+  dueAt: string | null;
+  completedAt: string | null;
+  createdAt: string;
+};
+
+type ActivityRow = {
+  id: string;
+  type: ActivityType;
+  subject: string | null;
+  body: string | null;
+  contact_id: string | null;
+  company_id: string | null;
+  inquiry_id: string | null;
+  owner_id: string | null;
+  occurred_at: string;
+  due_at: string | null;
+  completed_at: string | null;
+  created_at: string;
+  crm_contacts?: { full_name: string } | null;
+};
+
+const ACTIVITY_SELECT =
+  "id, type, subject, body, contact_id, company_id, inquiry_id, owner_id, occurred_at, due_at, completed_at, created_at, crm_contacts(full_name)";
+
+function toActivity(row: ActivityRow): CrmActivity {
+  return {
+    id: row.id,
+    type: row.type,
+    subject: row.subject,
+    body: row.body,
+    contactId: row.contact_id,
+    contactName: row.crm_contacts?.full_name ?? null,
+    companyId: row.company_id,
+    inquiryId: row.inquiry_id,
+    ownerId: row.owner_id,
+    occurredAt: row.occurred_at,
+    dueAt: row.due_at,
+    completedAt: row.completed_at,
+    createdAt: row.created_at
+  };
+}
+
+export async function listActivitiesForContact(contactId: string): Promise<CrmActivity[]> {
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) return [];
+  const { data } = await supabase
+    .from("crm_activities")
+    .select(ACTIVITY_SELECT)
+    .eq("contact_id", contactId)
+    .order("occurred_at", { ascending: false });
+  return ((data ?? []) as unknown as ActivityRow[]).map(toActivity);
+}
+
+export async function listActivitiesGlobal(options?: { type?: ActivityType; limit?: number }): Promise<CrmActivity[]> {
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) return [];
+  let q = supabase
+    .from("crm_activities")
+    .select(ACTIVITY_SELECT)
+    .order("occurred_at", { ascending: false })
+    .limit(options?.limit ?? 100);
+  if (options?.type) q = q.eq("type", options.type);
+  const { data } = await q;
+  return ((data ?? []) as unknown as ActivityRow[]).map(toActivity);
+}
+
+export async function listOpenTasks(): Promise<CrmActivity[]> {
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) return [];
+  const { data } = await supabase
+    .from("crm_activities")
+    .select(ACTIVITY_SELECT)
+    .eq("type", "task")
+    .is("completed_at", null)
+    .order("due_at", { ascending: true, nullsFirst: false });
+  return ((data ?? []) as unknown as ActivityRow[]).map(toActivity);
+}
+
 export async function listTags() {
   const supabase = await createSupabaseServerClient();
   if (!supabase) return [];
