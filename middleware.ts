@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { canAccessAdminArea, canAccessBuyerArea, getRoleHome } from "./app/lib/auth/roles";
 import { getSupabaseConfig } from "./app/lib/env";
 
-export async function proxy(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { anonKey, isConfigured, url } = getSupabaseConfig();
   const { pathname } = request.nextUrl;
 
