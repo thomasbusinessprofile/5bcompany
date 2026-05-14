@@ -620,6 +620,9 @@ Ask: "What is your typical defect rate at AQL 2.5?" Tier 1 quotes a number. Tier
 **The bottom line.** Vietnam can absolutely deliver world-class quality. But the supplier you contact first via Alibaba search rarely is. Invest in the introduction, then the relationship.`,
     status: "published"
   },
+  // ↑ append new articles above this line. Each new entry needs a unique
+  // slug + id, then add a corresponding row to `articleMeta` below for
+  // category, publishedAt, and (optional) hero image.
   {
     id: "seed-vietnam-export-2026-outlook",
     slug: "vietnam-export-outlook-2026",
@@ -668,3 +671,132 @@ Ask: "What is your typical defect rate at AQL 2.5?" Tier 1 quotes a number. Tier
     status: "published"
   }
 ];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Per-article metadata (category, dates, hero image).
+// Keep dates ISO 8601. Categories surface as filter chips on /articles and as
+// JSON-LD article section. Image is used for OG/Twitter and the article hero.
+// ─────────────────────────────────────────────────────────────────────────────
+
+export type ArticleMeta = {
+  publishedAt: string;
+  updatedAt?: string;
+  category: string;
+  image?: string;
+};
+
+export const ARTICLE_CATEGORIES = [
+  "Sourcing guides",
+  "Materials & craft",
+  "Market insights",
+  "Trade & logistics",
+  "Compliance"
+] as const;
+
+export const articleMeta: Record<string, ArticleMeta> = {
+  "how-to-source-bamboo-fence-from-vietnam": {
+    publishedAt: "2025-11-04",
+    category: "Sourcing guides",
+    image: "/images/bamboo_fences.jpg"
+  },
+  "stretch-film-sourcing-checklist": {
+    publishedAt: "2025-11-12",
+    category: "Sourcing guides",
+    image: "/images/stretch_film.jpg"
+  },
+  "vietnam-vs-china-bamboo-sourcing": {
+    publishedAt: "2025-12-02",
+    category: "Market insights",
+    image: "/images/bamboo_poles.jpg"
+  },
+  "mekong-delta-biochar-export-guide": {
+    publishedAt: "2025-12-09",
+    category: "Materials & craft",
+    image: "/images/charcoal_biochar.png"
+  },
+  "vietnam-craft-villages-buyer-map": {
+    publishedAt: "2025-12-15",
+    category: "Materials & craft",
+    image: "/images/quality_control.png"
+  },
+  "evfta-vietnam-eu-tariff-advantages": {
+    publishedAt: "2026-01-08",
+    category: "Trade & logistics",
+    image: "/images/warehouse_loading.jpg"
+  },
+  "china-plus-one-vietnam-2026": {
+    publishedAt: "2026-01-15",
+    category: "Market insights",
+    image: "/images/warehouse_loading.jpg"
+  },
+  "haiphong-vs-hcmc-port-export-guide": {
+    publishedAt: "2026-01-22",
+    category: "Trade & logistics",
+    image: "/images/warehouse_loading.jpg"
+  },
+  "csrd-eu-due-diligence-vietnam": {
+    publishedAt: "2026-02-04",
+    category: "Compliance",
+    image: "/images/quality_control.png"
+  },
+  "bamboo-charcoal-buyer-grades": {
+    publishedAt: "2026-02-12",
+    category: "Materials & craft",
+    image: "/images/charcoal_biochar.png"
+  },
+  "rattan-furniture-vietnam-vs-indonesia": {
+    publishedAt: "2026-02-20",
+    category: "Market insights",
+    image: "/images/rattan_furniture.jpg"
+  },
+  "bao-loc-silk-export-guide": {
+    publishedAt: "2026-03-03",
+    category: "Materials & craft",
+    image: "/images/quality_control.png"
+  },
+  "bat-trang-ceramic-export-buyers": {
+    publishedAt: "2026-03-10",
+    category: "Materials & craft",
+    image: "/images/quality_control.png"
+  },
+  "pre-shipment-inspection-vietnam-buyers": {
+    publishedAt: "2026-03-18",
+    category: "Compliance",
+    image: "/images/quality_control.png"
+  },
+  "vietnam-specialty-paper-export-guide": {
+    publishedAt: "2026-03-25",
+    category: "Materials & craft",
+    image: "/images/packaging_tape.png"
+  },
+  "small-buyer-container-consolidation-vietnam": {
+    publishedAt: "2026-04-02",
+    category: "Trade & logistics",
+    image: "/images/warehouse_loading.jpg"
+  },
+  "bamboo-packaging-post-plastic-case": {
+    publishedAt: "2026-04-10",
+    category: "Materials & craft",
+    image: "/images/bamboo_forest.png"
+  },
+  "letter-of-credit-vs-tt-vietnam-payment": {
+    publishedAt: "2026-04-18",
+    category: "Trade & logistics",
+    image: "/images/warehouse_loading.jpg"
+  },
+  "rcep-vietnam-japan-korea-australia": {
+    publishedAt: "2026-04-26",
+    category: "Trade & logistics",
+    image: "/images/warehouse_loading.jpg"
+  },
+  "vietnam-quality-myth-buyer-reality": {
+    publishedAt: "2026-05-04",
+    category: "Sourcing guides",
+    image: "/images/quality_control.png"
+  },
+  "vietnam-export-outlook-2026": {
+    publishedAt: "2026-05-12",
+    category: "Market insights",
+    image: "/images/bamboo_forest.png"
+  }
+};
