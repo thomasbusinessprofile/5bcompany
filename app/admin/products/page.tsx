@@ -1,6 +1,8 @@
 import { deleteProduct, saveProduct } from "./actions";
 import { getProductCmsData } from "../../shared/product-cms-data";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Admin Products | 5B Trading",
   description: "Product CMS foundation for public catalogue content."
