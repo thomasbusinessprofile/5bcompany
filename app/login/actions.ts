@@ -25,24 +25,24 @@ export async function login(formData: FormData) {
     redirect("/login?status=missing-fields");
   }
 
-  const { error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password
   });
 
-  if (error) {
+  if (error || !data.user) {
     redirect("/login?status=invalid");
   }
-
-  const {
-    data: { user }
-  } = await supabase.auth.getUser();
 
   const { data: profile } = await supabase
     .from("profiles")
     .select("role")
-    .eq("user_id", user?.id)
+    .eq("user_id", data.user.id)
     .maybeSingle();
 
-  redirect(next || getRoleHome(profile?.role));
+  if (!profile?.role) {
+    redirect("/login?status=missing-profile");
+  }
+
+  redirect(next || getRoleHome(profile.role));
 }
