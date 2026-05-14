@@ -25,19 +25,29 @@ const adminTabs = [
 ];
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const supabase = await createSupabaseServerClient();
-  if (!supabase) redirect("/login?status=config-error");
+  let role: string | null | undefined;
+  try {
+    const supabase = await createSupabaseServerClient();
+    if (!supabase) redirect("/login?status=config-error");
 
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) redirect("/login?next=/admin/dashboard");
+    const userRes = await supabase.auth.getUser();
+    const user = userRes.data?.user;
+    if (!user) redirect("/login?next=/admin/dashboard");
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("role")
-    .eq("user_id", user.id)
-    .maybeSingle();
+    const profileRes = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("user_id", user.id)
+      .maybeSingle();
+    role = profileRes.data?.role ?? null;
+  } catch (err) {
+    // Re-throw NEXT_REDIRECT so Next.js handles it. Any other error → bounce
+    // to /login rather than blow up into the global error boundary.
+    if (err && typeof err === "object" && "digest" in err) throw err;
+    redirect("/login?status=expired");
+  }
 
-  if (!canAccessAdminArea(profile?.role)) {
+  if (!canAccessAdminArea(role)) {
     redirect("/login?status=unauthorized");
   }
 
