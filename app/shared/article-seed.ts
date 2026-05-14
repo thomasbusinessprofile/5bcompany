@@ -697,27 +697,27 @@ export const articleMeta: Record<string, ArticleMeta> = {
   "how-to-source-bamboo-fence-from-vietnam": {
     publishedAt: "2025-11-04",
     category: "Sourcing guides",
-    image: "/images/bamboo_fences.jpg"
+    image: "/images/article-bamboo-fence.jpg"
   },
   "stretch-film-sourcing-checklist": {
     publishedAt: "2025-11-12",
     category: "Sourcing guides",
-    image: "/images/stretch_film.jpg"
+    image: "/images/article-stretch-film.jpg"
   },
   "vietnam-vs-china-bamboo-sourcing": {
     publishedAt: "2025-12-02",
     category: "Market insights",
-    image: "/images/bamboo_poles.jpg"
+    image: "/images/article-vietnam-vs-china.jpg"
   },
   "mekong-delta-biochar-export-guide": {
     publishedAt: "2025-12-09",
     category: "Materials & craft",
-    image: "/images/charcoal_biochar.png"
+    image: "/images/article-mekong-biochar.jpg"
   },
   "vietnam-craft-villages-buyer-map": {
     publishedAt: "2025-12-15",
     category: "Materials & craft",
-    image: "/images/quality_control.png"
+    image: "/images/article-craft-villages.jpg"
   },
   "evfta-vietnam-eu-tariff-advantages": {
     publishedAt: "2026-01-08",
