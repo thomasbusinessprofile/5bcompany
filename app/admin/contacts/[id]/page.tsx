@@ -102,7 +102,9 @@ export default async function ContactDetailPage({ params, searchParams }: Props)
           <h2 style={{ marginTop: 28 }}>Quick actions</h2>
           <div className="cta-row">
             {contact.email ? (
-              <a className="secondary-link" href={`mailto:${contact.email}`}>Email</a>
+              <Link className="secondary-link" href={`/admin/email/compose?contact=${contact.id}`}>
+                Send email
+              </Link>
             ) : null}
             {contact.whatsapp ? (
               <a

@@ -125,6 +125,14 @@ export default async function DealDetailPage({ params, searchParams }: Props) {
             <div><dt>Source</dt><dd>{deal.source ?? "—"}</dd></div>
             <div><dt>Created</dt><dd>{new Date(deal.createdAt).toLocaleDateString()}</dd></div>
           </dl>
+          <div className="cta-row" style={{ marginTop: 12 }}>
+            <Link
+              className="secondary-link"
+              href={`/admin/email/compose?deal=${deal.id}${deal.contactId ? `&contact=${deal.contactId}` : ""}`}
+            >
+              Send email
+            </Link>
+          </div>
           {deal.inquiryId ? (
             <p>
               <Link className="secondary-link" href={`/admin/requests/${deal.inquiryId}`}>

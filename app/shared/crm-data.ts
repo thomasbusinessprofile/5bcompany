@@ -421,6 +421,83 @@ export async function listDealsForContact(contactId: string): Promise<Deal[]> {
   return ((data ?? []) as unknown as DealRow[]).map(toDeal);
 }
 
+export type EmailTemplate = {
+  id: string;
+  name: string;
+  subject: string;
+  bodyHtml: string | null;
+  bodyText: string | null;
+  variables: string[];
+  updatedAt: string;
+};
+
+export async function listEmailTemplates(): Promise<EmailTemplate[]> {
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) return [];
+  const { data } = await supabase
+    .from("crm_email_templates")
+    .select("id, name, subject, body_html, body_text, variables, updated_at")
+    .order("name");
+  return (data ?? []).map((r) => ({
+    id: r.id as string,
+    name: r.name as string,
+    subject: r.subject as string,
+    bodyHtml: (r.body_html as string) ?? null,
+    bodyText: (r.body_text as string) ?? null,
+    variables: Array.isArray(r.variables) ? (r.variables as string[]) : [],
+    updatedAt: r.updated_at as string
+  }));
+}
+
+export async function getEmailTemplateById(id: string): Promise<EmailTemplate | null> {
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) return null;
+  const { data } = await supabase
+    .from("crm_email_templates")
+    .select("id, name, subject, body_html, body_text, variables, updated_at")
+    .eq("id", id)
+    .maybeSingle();
+  if (!data) return null;
+  return {
+    id: data.id as string,
+    name: data.name as string,
+    subject: data.subject as string,
+    bodyHtml: (data.body_html as string) ?? null,
+    bodyText: (data.body_text as string) ?? null,
+    variables: Array.isArray(data.variables) ? (data.variables as string[]) : [],
+    updatedAt: data.updated_at as string
+  };
+}
+
+export type EmailLog = {
+  id: string;
+  to: string;
+  subject: string;
+  status: string;
+  error: string | null;
+  sentAt: string | null;
+  createdAt: string;
+};
+
+export async function listEmailsForContact(contactId: string): Promise<EmailLog[]> {
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) return [];
+  const { data } = await supabase
+    .from("crm_emails")
+    .select("id, to_email, subject, status, error, sent_at, created_at")
+    .eq("contact_id", contactId)
+    .order("created_at", { ascending: false });
+  return (data ?? []).map((r) => ({
+    id: r.id as string,
+    to: r.to_email as string,
+    subject: r.subject as string,
+    status: r.status as string,
+    error: (r.error as string) ?? null,
+    sentAt: (r.sent_at as string) ?? null,
+    createdAt: r.created_at as string
+  }));
+}
+
 export async function listTags() {
   const supabase = await createSupabaseServerClient();
   if (!supabase) return [];
