@@ -9,12 +9,19 @@ import { createSupabaseServerClient } from "../../../lib/supabase/server";
 export const dynamic = "force-dynamic";
 export const metadata = { title: "New contract | Admin", robots: { index: false } };
 
-type Props = { searchParams: Promise<{ deal?: string; contact?: string; type?: string }> };
+type Props = { searchParams: Promise<{ deal?: string; contact?: string; type?: string; status?: string; message?: string }> };
 
 const TYPES: ContractType[] = ["loi", "sample", "proforma", "sales", "distribution"];
 
+function flash(status?: string, message?: string) {
+  if (status === "missing-fields") return { tone: "error", text: "Buyer legal name is required." };
+  if (status === "save-error") return { tone: "error", text: message ? `Save failed: ${message}` : "Save failed. Check the server logs for details." };
+  return null;
+}
+
 export default async function NewContractPage({ searchParams }: Props) {
-  const { deal: dealId, contact: contactId, type: prefType } = await searchParams;
+  const { deal: dealId, contact: contactId, type: prefType, status, message } = await searchParams;
+  const banner = flash(status, message);
   const [templates, companies, contacts] = await Promise.all([
     listContractTemplates(),
     listCompanies(),
@@ -65,6 +72,7 @@ export default async function NewContractPage({ searchParams }: Props) {
       </section>
 
       <form action={createContract} className="page-card request-form">
+        {banner ? <p className={`form-status ${banner.tone}`}>{banner.text}</p> : null}
         <input name="deal_id" type="hidden" value={dealId ?? ""} />
 
         <h2 className="rfq-section-title">Type & template</h2>
