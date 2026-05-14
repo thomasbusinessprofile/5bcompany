@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { getRoleHome } from "../lib/auth/roles";
+import { safeInternalPath } from "../lib/auth/safe-redirect";
 import { createSupabaseServerClient } from "../lib/supabase/server";
 
 function value(formData: FormData, key: string) {
@@ -44,5 +45,5 @@ export async function login(formData: FormData) {
     redirect("/login?status=missing-profile");
   }
 
-  redirect(next || getRoleHome(profile.role));
+  redirect(safeInternalPath(next) ?? getRoleHome(profile.role));
 }

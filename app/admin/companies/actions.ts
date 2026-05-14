@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "../../lib/supabase/server";
+import { requireAdminRole } from "../../lib/auth/require-admin";
 
 function val(formData: FormData, key: string) {
   const item = formData.get(key);
@@ -12,6 +13,7 @@ function val(formData: FormData, key: string) {
 export async function saveCompany(formData: FormData) {
   const supabase = await createSupabaseServerClient();
   if (!supabase) redirect("/login");
+  await requireAdminRole(supabase);
 
   const id = val(formData, "company_id");
   const name = val(formData, "name");
@@ -40,6 +42,7 @@ export async function saveCompany(formData: FormData) {
 export async function deleteCompany(formData: FormData) {
   const supabase = await createSupabaseServerClient();
   if (!supabase) redirect("/login");
+  await requireAdminRole(supabase);
   const id = val(formData, "company_id");
   if (id) await supabase.from("crm_companies").delete().eq("id", id);
   revalidatePath("/admin/companies");

@@ -1,23 +1,32 @@
 -- Bootstraps an admin user.
 --
--- Step 1 — Run in Supabase SQL editor with the service_role (or psql as
---          postgres). The pgcrypto extension is needed for crypt() to hash
---          the password the same way Supabase Auth does.
+-- ⚠️ BEFORE RUNNING THIS MIGRATION:
+--    1. Set BOTH variables below to your chosen email + a strong password
+--       (or set the supabase env vars and read them via current_setting()).
+--    2. Run the migration.
+--    3. Log in once and change the password via Supabase Studio.
 --
--- Email:    admin@5bcompany.com
--- Password: ZJTxUx3PK2AmXXk!Vr@E   ← change immediately after first login
+-- This file is intentionally checked in WITHOUT a real password.
+-- The previous password ('ZJTxUx3PK2AmXXk!Vr@E') was committed to git
+-- history and has been rotated; do not reuse it.
 --
 -- Idempotent: re-running upserts the auth user, ensures profile exists,
--- promotes role to 'admin'.
+-- promotes role to 'admin'. Password is rotated only when the file
+-- contains a value other than the placeholder.
 
 create extension if not exists pgcrypto;
 
 do $$
 declare
   v_email text := 'admin@5bcompany.com';
-  v_password text := 'ZJTxUx3PK2AmXXk!Vr@E';
+  v_password text := 'CHANGE_ME_BEFORE_RUNNING';
   v_user_id uuid;
 begin
+  if v_password = 'CHANGE_ME_BEFORE_RUNNING' then
+    raise notice 'Skipping admin bootstrap: password placeholder not changed.';
+    return;
+  end if;
+
   select id into v_user_id from auth.users where email = v_email;
 
   if v_user_id is null then
@@ -43,7 +52,7 @@ begin
       'authenticated',
       'authenticated',
       v_email,
-      crypt(v_password, gen_salt('bf')),
+      crypt(v_password, gen_salt('bf', 10)),
       now(),
       jsonb_build_object('provider', 'email', 'providers', array['email']),
       jsonb_build_object('full_name', 'Site Administrator'),
@@ -64,17 +73,13 @@ begin
       now(), now(), now()
     );
   else
-    -- Ensure password is the known value (rotate by editing v_password above).
     update auth.users
-       set encrypted_password = crypt(v_password, gen_salt('bf')),
+       set encrypted_password = crypt(v_password, gen_salt('bf', 10)),
            email_confirmed_at = coalesce(email_confirmed_at, now()),
            updated_at = now()
      where id = v_user_id;
   end if;
 
-  -- The on-signup trigger creates a profile with role='buyer' for new users.
-  -- For an existing user with no profile (eg. created via Studio UI), insert
-  -- one. Then promote to admin in either case.
   insert into public.profiles (user_id, full_name, role)
   values (v_user_id, 'Site Administrator', 'admin')
   on conflict (user_id) do update set role = 'admin';

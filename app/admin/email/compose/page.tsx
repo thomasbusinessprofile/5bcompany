@@ -108,14 +108,10 @@ export default async function ComposePage({ searchParams }: Props) {
           </label>
         </div>
 
-        <label>
-          From
-          <input
-            name="from"
-            type="text"
-            defaultValue={process.env.RESEND_FROM_EMAIL ?? "5B Trading <hello@5bcompany.com>"}
-          />
-        </label>
+        <p className="muted" style={{ fontSize: 12, margin: "4px 0 0" }}>
+          From: <code>{process.env.RESEND_FROM_EMAIL ?? "5B Trading <hello@5bcompany.com>"}</code>{" "}
+          (configured via <code>RESEND_FROM_EMAIL</code> env var)
+        </p>
         <label>
           Reply-to (optional)
           <input name="reply_to" type="email" placeholder="leave blank to use From" />
