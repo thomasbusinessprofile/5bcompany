@@ -1075,6 +1075,33 @@ main {
 
 .about-final-cta { padding: 56px; }
 
+.cert-grid { grid-template-columns: repeat(3, 1fr); }
+.cert-grid .value-num { color: var(--green); }
+
+.disclosure-card {
+  border-left: 4px solid var(--gold);
+  padding: 36px;
+}
+.disclosure-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin: 20px 0;
+}
+.disclosure-grid h3 {
+  font-size: 16px;
+  margin-bottom: 12px;
+  color: var(--green);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.disclosure-grid ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+}
+.disclosure-grid li { margin-bottom: 10px; line-height: 1.55; font-size: 14px; }
+
 @media (max-width: 900px) {
   .about-hero { grid-template-columns: 1fr; gap: 28px; }
   .about-hero-copy h1 { font-size: 30px; }
@@ -1092,6 +1119,9 @@ main {
   .founder-grid { grid-template-columns: 1fr; }
   .about-final-cta { padding: 28px; }
   .about-shell { gap: 48px; }
+  .cert-grid { grid-template-columns: repeat(2, 1fr); }
+  .disclosure-card { padding: 20px; border-left-width: 3px; }
+  .disclosure-grid { grid-template-columns: 1fr; gap: 20px; margin: 14px 0; }
 }
 
 /* ───── WhatsApp FAB ───── */
