@@ -33,11 +33,20 @@ export async function saveArticle(formData: FormData) {
     redirect("/admin/articles?status=missing-fields");
   }
 
+  const publishedAtInput = value(formData, "published_at");
+  const published_at = publishedAtInput
+    ? new Date(publishedAtInput).toISOString()
+    : status === "published"
+    ? new Date().toISOString()
+    : null;
+
   const payload = {
     body: value(formData, "body") || null,
+    category: value(formData, "category") || null,
     excerpt: value(formData, "excerpt") || null,
+    image_url: value(formData, "image_url") || null,
     keyword: value(formData, "keyword") || null,
-    published_at: status === "published" ? new Date().toISOString() : null,
+    published_at,
     seo_description: value(formData, "seo_description") || null,
     seo_title: value(formData, "seo_title") || null,
     slug,

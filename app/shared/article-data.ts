@@ -34,7 +34,14 @@ type ArticleRow = {
   slug: string;
   status: string;
   title: string;
+  published_at: string | null;
+  updated_at: string | null;
+  category: string | null;
+  image_url: string | null;
 };
+
+const ARTICLE_COLUMNS =
+  "id,slug,title,excerpt,body,keyword,seo_title,seo_description,status,published_at,updated_at,category,image_url";
 
 function toArticle(row: ArticleRow): Article {
   return {
@@ -46,7 +53,11 @@ function toArticle(row: ArticleRow): Article {
     seoTitle: row.seo_title ?? row.title,
     slug: row.slug,
     status: row.status,
-    title: row.title
+    title: row.title,
+    publishedAt: row.published_at ?? undefined,
+    updatedAt: row.updated_at ?? undefined,
+    category: row.category ?? undefined,
+    image: row.image_url ?? undefined
   };
 }
 
@@ -59,7 +70,7 @@ export async function getPublicArticles() {
 
   const { data, error } = await supabase
     .from("articles")
-    .select("id,slug,title,excerpt,body,keyword,seo_title,seo_description,status")
+    .select(ARTICLE_COLUMNS)
     .eq("status", "published")
     .order("published_at", { ascending: false });
 
@@ -85,7 +96,7 @@ export async function getCmsArticles() {
 
   const { data } = await supabase
     .from("articles")
-    .select("id,slug,title,excerpt,body,keyword,seo_title,seo_description,status")
+    .select(ARTICLE_COLUMNS)
     .order("updated_at", { ascending: false });
 
   return ((data ?? []) as ArticleRow[]).map(toArticle);
