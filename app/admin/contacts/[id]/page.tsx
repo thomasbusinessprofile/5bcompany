@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getContactById, getContactInquiries, listCompanies } from "../../../shared/crm-data";
+import { getContactById, getContactInquiries, listActivitiesForContact, listCompanies } from "../../../shared/crm-data";
+import { ActivityTimeline } from "../../activities/ActivityTimeline";
+import { saveActivity } from "../../activities/actions";
 import { deleteContact, saveContact } from "../actions";
 
 export const metadata = { title: "Contact | Admin", robots: { index: false } };
@@ -10,10 +12,11 @@ type Props = { params: Promise<{ id: string }>; searchParams: Promise<{ status?:
 export default async function ContactDetailPage({ params, searchParams }: Props) {
   const { id } = await params;
   const { status } = await searchParams;
-  const [contact, inquiries, companies] = await Promise.all([
+  const [contact, inquiries, companies, activities] = await Promise.all([
     getContactById(id),
     getContactInquiries(id),
-    listCompanies()
+    listCompanies(),
+    listActivitiesForContact(id)
   ]);
   if (!contact) notFound();
 
@@ -118,6 +121,29 @@ export default async function ContactDetailPage({ params, searchParams }: Props)
             <button className="ghost-link danger" type="submit">Delete contact</button>
           </form>
         </aside>
+      </section>
+
+      <section className="page-card">
+        <h2>Activity timeline</h2>
+        <form action={saveActivity} className="activity-quick-form">
+          <input name="contact_id" type="hidden" value={contact.id} />
+          <input name="redirect_to" type="hidden" value={`/admin/contacts/${contact.id}`} />
+          <div className="activity-quick-row">
+            <select name="type" defaultValue="note" aria-label="Activity type">
+              <option value="note">📝 Note</option>
+              <option value="call">📞 Call</option>
+              <option value="email">✉️ Email</option>
+              <option value="meeting">🗓 Meeting</option>
+              <option value="whatsapp">💬 WhatsApp</option>
+              <option value="task">✅ Task</option>
+            </select>
+            <input name="subject" placeholder="Subject (optional)" />
+            <input name="due_at" type="datetime-local" aria-label="Due date (tasks only)" />
+          </div>
+          <textarea name="body" rows={2} placeholder="What happened?" />
+          <button className="primary-link" type="submit">Log activity</button>
+        </form>
+        <ActivityTimeline activities={activities} redirectTo={`/admin/contacts/${contact.id}`} />
       </section>
     </div>
   );

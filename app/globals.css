@@ -1231,6 +1231,67 @@ main {
 .ghost-link.danger { color: #b91c1c; }
 .ghost-link.danger:hover { background: #fee2e2; }
 
+/* ───── Activity timeline ───── */
+.activity-quick-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  margin-bottom: 20px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+.activity-quick-row {
+  display: grid;
+  grid-template-columns: 140px 1fr 220px;
+  gap: 8px;
+}
+@media (max-width: 768px) {
+  .activity-quick-row { grid-template-columns: 1fr; }
+}
+.activity-quick-form textarea { width: 100%; resize: vertical; }
+
+.activity-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.activity-item {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  align-items: start;
+}
+.activity-item:last-child { border-bottom: none; }
+.activity-item.done .activity-head strong { text-decoration: line-through; opacity: 0.6; }
+.activity-item.overdue { background: #fef2f2; margin: 0 -12px; padding-left: 12px; padding-right: 12px; }
+.activity-item.overdue .activity-icon { color: #b91c1c; }
+.activity-icon {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--green-soft);
+  border-radius: 50%;
+  font-size: 16px;
+}
+.activity-head { font-size: 15px; }
+.activity-head strong { color: var(--green); }
+.activity-contact { margin-left: 8px; font-size: 13px; }
+.activity-text { margin: 6px 0 4px; color: var(--ink); line-height: 1.55; white-space: pre-wrap; }
+.activity-meta { font-size: 12px; color: var(--muted); margin: 0; }
+.activity-actions { display: flex; gap: 4px; align-items: center; }
+.activity-actions button { padding: 4px 10px; font-size: 13px; }
+
+.overdue-card { border-left: 4px solid #b91c1c; }
+
 /* ───── WhatsApp FAB ───── */
 .whatsapp-fab {
   position: fixed;
