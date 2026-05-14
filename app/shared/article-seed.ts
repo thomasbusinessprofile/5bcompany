@@ -747,27 +747,27 @@ export const articleMeta: Record<string, ArticleMeta> = {
   "rattan-furniture-vietnam-vs-indonesia": {
     publishedAt: "2026-02-20",
     category: "Market insights",
-    image: "/images/rattan_furniture.jpg"
+    image: "/images/article-rattan-vs-indonesia.jpg"
   },
   "bao-loc-silk-export-guide": {
     publishedAt: "2026-03-03",
     category: "Materials & craft",
-    image: "/images/quality_control.png"
+    image: "/images/article-bao-loc-silk.jpg"
   },
   "bat-trang-ceramic-export-buyers": {
     publishedAt: "2026-03-10",
     category: "Materials & craft",
-    image: "/images/quality_control.png"
+    image: "/images/article-bat-trang-ceramic.jpg"
   },
   "pre-shipment-inspection-vietnam-buyers": {
     publishedAt: "2026-03-18",
     category: "Compliance",
-    image: "/images/quality_control.png"
+    image: "/images/article-psi-inspection.jpg"
   },
   "vietnam-specialty-paper-export-guide": {
     publishedAt: "2026-03-25",
     category: "Materials & craft",
-    image: "/images/packaging_tape.png"
+    image: "/images/article-specialty-paper.jpg"
   },
   "small-buyer-container-consolidation-vietnam": {
     publishedAt: "2026-04-02",
