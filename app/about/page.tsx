@@ -88,7 +88,7 @@ export default function AboutPage() {
           </div>
         </div>
         <div className="about-hero-image">
-          <img alt="Bamboo forest in northern Vietnam" src="/images/bamboo_forest.png" />
+          <img alt="Containers loading at a Vietnamese export warehouse" src="/images/warehouse_loading.jpg" />
         </div>
       </section>
 
@@ -110,7 +110,7 @@ export default function AboutPage() {
           </p>
         </div>
         <div className="story-block-image">
-          <img alt="Quality control on bamboo poles" src="/images/quality_control.png" />
+          <img alt="Bamboo grove in a northern Vietnamese craft village" src="/images/bamboo_forest.png" />
         </div>
       </section>
 
@@ -131,7 +131,7 @@ export default function AboutPage() {
           </p>
         </div>
         <div className="story-block-image">
-          <img alt="Warehouse loading for export" src="/images/warehouse_loading.jpg" />
+          <img alt="Pre-shipment quality control inspection" src="/images/quality_control.png" />
         </div>
       </section>
 
