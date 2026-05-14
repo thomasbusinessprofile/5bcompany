@@ -6,8 +6,9 @@ import { BUSINESS_TYPES } from "../lib/constants";
 const businessTypes = BUSINESS_TYPES;
 
 export const metadata = {
-  title: "Register | 5B Trading",
-  description: "Register a buyer account for structured export sourcing requests."
+  title: "Create account | 5B Trading",
+  description: "Create a 5B Trading buyer account to track your sourcing requests, quotations, and orders.",
+  robots: { index: false, follow: false }
 };
 
 type RegisterPageProps = {
@@ -15,22 +16,10 @@ type RegisterPageProps = {
 };
 
 function getMessage(status?: string) {
-  if (status === "missing-fields") {
-    return { tone: "error", text: "Please enter name, work email, company name, and password." };
-  }
-
-  if (status === "email-exists") {
-    return { tone: "error", text: "This email is already registered. Please login instead." };
-  }
-
-  if (status === "submit-error") {
-    return { tone: "error", text: "Registration failed. Please check the details or try signing in." };
-  }
-
-  if (status === "config-error") {
-    return { tone: "error", text: "Supabase is not configured for this environment." };
-  }
-
+  if (status === "missing-fields") return { tone: "error", text: "Please enter name, work email, company name, and password." };
+  if (status === "email-exists") return { tone: "error", text: "This email is already registered. Please sign in instead." };
+  if (status === "submit-error") return { tone: "error", text: "Registration failed. Please check the details or try signing in." };
+  if (status === "config-error") return { tone: "error", text: "Authentication is not configured for this environment." };
   return null;
 }
 
@@ -39,88 +28,94 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
   const message = getMessage(status);
 
   return (
-    <div className="page-shell auth-shell">
-      <section className="section-title">
-        <p className="eyebrow">Create Account</p>
-        <h1>Create a buyer sourcing account</h1>
-        <p>
-          Buyer accounts move the website from one-way RFQ into ongoing request
-          history, company profile, messages, attachments, and quotation review.
+    <div className="auth-shell">
+      <div className="auth-card auth-card-wide">
+        <Link className="auth-brand" href="/">
+          <span className="brand-mark">5B</span>
+          <span>
+            <strong>5B Trading</strong>
+            <small>Buyer workspace</small>
+          </span>
+        </Link>
+
+        <h1>Create your buyer account</h1>
+        <p className="auth-lede">
+          Track every sourcing request, quotation, and shipment in one place. Free to register —
+          we'll reply to your first RFQ within one working day.
         </p>
-      </section>
-      <section className="split">
-        <form action={registerBuyer} className="page-card request-form auth-form">
-          {message ? <p className={`form-status ${message.tone}`}>{message.text}</p> : null}
-          <label>
-            Full name
-            <input autoComplete="name" name="full_name" placeholder="Your name" required />
-          </label>
-          <label>
-            Work email
-            <input autoComplete="email" inputMode="email" name="email" placeholder="buyer@company.com" required type="email" />
-          </label>
-          <label>
-            Company name
-            <input autoComplete="organization" name="company_name" placeholder="Company legal or trade name" required />
-          </label>
-          <label>
-            Country
-            <input autoComplete="country-name" name="country" placeholder="Example: Germany" />
-          </label>
-          <label>
-            Business type
-            <select defaultValue="" name="business_type" required>
-              <option value="" disabled>
-                Select business type
-              </option>
-              {businessTypes.map((type) => (
-                <option key={type.value} value={type.value}>
-                  {type.label}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            WhatsApp / Phone
-            <input autoComplete="tel" inputMode="tel" name="phone" placeholder="+49..." />
-          </label>
+
+        {message ? <p className={`form-status ${message.tone}`}>{message.text}</p> : null}
+
+        <form action={registerBuyer} className="auth-form">
+          <div className="auth-row">
+            <label>
+              Full name
+              <input autoComplete="name" name="full_name" placeholder="Your name" required />
+            </label>
+            <label>
+              Work email
+              <input
+                autoComplete="email"
+                inputMode="email"
+                name="email"
+                placeholder="you@company.com"
+                required
+                type="email"
+              />
+            </label>
+          </div>
+
+          <div className="auth-row">
+            <label>
+              Company name
+              <input autoComplete="organization" name="company_name" placeholder="Company name" required />
+            </label>
+            <label>
+              Country
+              <input autoComplete="country-name" name="country" placeholder="Germany" />
+            </label>
+          </div>
+
+          <div className="auth-row">
+            <label>
+              Business type
+              <select defaultValue="" name="business_type" required>
+                <option value="" disabled>Select…</option>
+                {businessTypes.map((t) => (
+                  <option key={t.value} value={t.value}>{t.label}</option>
+                ))}
+              </select>
+            </label>
+            <label>
+              WhatsApp / Phone
+              <input autoComplete="tel" inputMode="tel" name="phone" placeholder="+49…" />
+            </label>
+          </div>
+
           <label>
             Password
             <input
-              aria-describedby="register-password-hint"
               autoComplete="new-password"
               minLength={8}
               name="password"
-              placeholder="Create a password"
+              placeholder="At least 8 characters"
               required
               type="password"
             />
           </label>
-          <p className="form-note" id="register-password-hint">
-            Minimum 8 characters. Use a mix of letters, numbers, and symbols.
-          </p>
-          <SubmitButton pendingLabel="Creating account...">Create buyer account</SubmitButton>
-          <p className="form-note" id="register-submit-note">
-            New public registrations always create buyer profiles. Staff roles
-            are assigned separately by an admin in Supabase.
-          </p>
+
+          <SubmitButton pendingLabel="Creating account...">Create account</SubmitButton>
         </form>
-        <aside className="page-card">
-          <h2>First login onboarding</h2>
-          <ul className="check-list">
-            <li>Confirm company information</li>
-            <li>Select product interests</li>
-            <li>Add destination country or region</li>
-            <li>Choose communication channel</li>
-            <li>Create first sourcing request</li>
-          </ul>
-          <div className="cta-row">
-            <Link className="secondary-link" href="/login">
-              Already have an account
-            </Link>
-          </div>
-        </aside>
-      </section>
+
+        <p className="auth-sub">
+          Already have an account?{" "}
+          <Link className="auth-link" href="/login">Sign in →</Link>
+        </p>
+      </div>
+
+      <p className="auth-footer">
+        <Link href="/">← Back to 5bcompany.com</Link>
+      </p>
     </div>
   );
 }

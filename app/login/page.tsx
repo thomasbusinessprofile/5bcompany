@@ -4,7 +4,8 @@ import { SubmitButton } from "../shared/SubmitButton";
 
 export const metadata = {
   title: "Login | 5B Trading",
-  description: "Login entry point for buyer, admin, sales, and sourcing workspaces."
+  description: "Sign in to your 5B Trading buyer workspace.",
+  robots: { index: false, follow: false }
 };
 
 type LoginPageProps = {
@@ -13,33 +14,14 @@ type LoginPageProps = {
 
 function getMessage(status?: string) {
   if (status === "check-email") {
-    return { tone: "success", text: "Account created. Please check your email to confirm your address, then sign in." };
+    return { tone: "success", text: "Account created. Check your email to confirm your address, then sign in." };
   }
-
-  if (status === "missing-fields") {
-    return { tone: "error", text: "Please enter both email and password." };
-  }
-
-  if (status === "invalid") {
-    return { tone: "error", text: "Login failed. Check your email and password." };
-  }
-
-  if (status === "config-error") {
-    return { tone: "error", text: "Supabase is not configured for this environment." };
-  }
-
-  if (status === "expired") {
-    return { tone: "error", text: "Your session has expired. Please login again." };
-  }
-
-  if (status === "missing-profile") {
-    return { tone: "error", text: "Your user profile is missing. Please contact support." };
-  }
-
-  if (status === "unauthorized") {
-    return { tone: "error", text: "You do not have permission to access this area." };
-  }
-
+  if (status === "missing-fields") return { tone: "error", text: "Please enter both email and password." };
+  if (status === "invalid") return { tone: "error", text: "Login failed. Check your email and password." };
+  if (status === "config-error") return { tone: "error", text: "Authentication is not configured for this environment." };
+  if (status === "expired") return { tone: "error", text: "Your session has expired. Please sign in again." };
+  if (status === "missing-profile") return { tone: "error", text: "Your profile is missing. Please contact support." };
+  if (status === "unauthorized") return { tone: "error", text: "You don't have permission to access that area." };
   return null;
 }
 
@@ -48,56 +30,63 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   const message = getMessage(status);
 
   return (
-    <div className="page-shell auth-shell">
-      <section className="section-title">
-        <p className="eyebrow">Buyer Account</p>
-        <h1>Login to your sourcing workspace</h1>
-        <p>
-          Supabase Auth now powers buyer and admin access. Role-based redirects
-          send buyers to their dashboard and staff to request operations.
+    <div className="auth-shell">
+      <div className="auth-card">
+        <Link className="auth-brand" href="/">
+          <span className="brand-mark">5B</span>
+          <span>
+            <strong>5B Trading</strong>
+            <small>Buyer workspace</small>
+          </span>
+        </Link>
+
+        <h1>Welcome back</h1>
+        <p className="auth-lede">
+          Sign in to access your sourcing requests, quotations, and order history.
         </p>
-      </section>
-      <section className="split">
-        <form action={login} className="page-card request-form auth-form">
-          {message ? <p className={`form-status ${message.tone}`}>{message.text}</p> : null}
+
+        {message ? <p className={`form-status ${message.tone}`}>{message.text}</p> : null}
+
+        <form action={login} className="auth-form">
           <input name="next" type="hidden" value={next ?? ""} />
           <label>
             Work email
-            <input autoComplete="email" inputMode="email" name="email" placeholder="buyer@company.com" required type="email" />
+            <input
+              autoComplete="email"
+              inputMode="email"
+              name="email"
+              placeholder="you@company.com"
+              required
+              type="email"
+            />
           </label>
           <label>
             Password
-            <input autoComplete="current-password" name="password" placeholder="Enter your password" required type="password" />
+            <input
+              autoComplete="current-password"
+              name="password"
+              placeholder="Enter your password"
+              required
+              type="password"
+            />
           </label>
-          <SubmitButton pendingLabel="Signing in...">Login</SubmitButton>
-          <p className="form-note" id="login-submit-note">
-            Buyer, admin, sales, sourcing, and viewer roles are enforced through
-            Supabase profiles and RLS.
-          </p>
+          <SubmitButton pendingLabel="Signing in...">Sign in</SubmitButton>
         </form>
-        <aside className="page-card">
-          <h2>Role routing</h2>
-          <div className="detail-list">
-            <div>
-              <strong>Buyer</strong>
-              <p>Redirects to `/buyer/dashboard` for open requests and required actions.</p>
-            </div>
-            <div>
-              <strong>Admin</strong>
-              <p>Redirects to `/admin/dashboard` for request operations overview.</p>
-            </div>
-            <div>
-              <strong>Sales / sourcing</strong>
-              <p>Redirects to `/admin/requests` filtered by assigned work.</p>
-            </div>
-          </div>
-          <div className="cta-row">
-            <Link className="secondary-link" href="/register">
-              Register buyer account
-            </Link>
-          </div>
-        </aside>
-      </section>
+
+        <p className="auth-sub">
+          New to 5B Trading?{" "}
+          <Link className="auth-link" href="/register">Create a buyer account →</Link>
+        </p>
+
+        <p className="auth-help">
+          Trouble signing in? Email{" "}
+          <a href="mailto:hello@5bcompany.com">hello@5bcompany.com</a>
+        </p>
+      </div>
+
+      <p className="auth-footer">
+        <Link href="/">← Back to 5bcompany.com</Link>
+      </p>
     </div>
   );
 }
