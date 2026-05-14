@@ -1,6 +1,7 @@
 import { saveArticle } from "./actions";
 import { getCmsArticles } from "../../shared/article-data";
 import { ARTICLE_CATEGORIES } from "../../shared/article-seed";
+import { ImageUploader } from "../shared/ImageUploader";
 
 export const metadata = {
   title: "Admin Articles | 5B Trading",
@@ -108,11 +109,12 @@ export default async function AdminArticlesPage({ searchParams }: AdminArticlesP
             />
           </label>
           <label>
-            Hero image path
-            <input
+            Hero image
+            <ImageUploader
               defaultValue={editing?.image ?? ""}
-              name="image_url"
-              placeholder="/images/article-my-slug.jpg"
+              fieldName="image_url"
+              folder="articles"
+              placeholder="Upload a hero image or paste a URL"
             />
           </label>
           <label>
