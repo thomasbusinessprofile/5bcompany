@@ -1121,6 +1121,29 @@ main {
 
 /* ───── Mobile adjustments ───── */
 @media (max-width: 768px) {
+  .workflow-panel {
+    padding: 22px 18px;
+    border-radius: var(--radius-md);
+  }
+  .workflow-panel h2 {
+    font-size: 22px;
+    margin-bottom: 18px;
+  }
+  .workflow-steps { gap: 12px; }
+  .workflow-step {
+    padding: 14px;
+    gap: 14px;
+    border-radius: var(--radius-md);
+  }
+  .workflow-step:hover { transform: none; }
+  .workflow-step span {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+  .workflow-step h3 { font-size: 15px; margin-bottom: 4px; }
+  .workflow-step p { font-size: 13px; line-height: 1.5; margin: 0; }
+
   .story-grid {
     grid-template-columns: 1fr;
     gap: 14px;
@@ -1130,8 +1153,13 @@ main {
     border-radius: var(--radius-md);
   }
   .story-card h2 {
-    font-size: 18px;
+    font-size: 17px;
+    margin-bottom: 8px;
   }
+  .story-card p { font-size: 14px; line-height: 1.55; }
+  .story-card .eyebrow { font-size: 11px; margin-bottom: 8px; }
+  .featured-products .section-title h2 { font-size: 22px; }
+  .featured-products .section-title p { font-size: 14px; }
   .final-cta {
     padding: 24px;
     border-radius: var(--radius-md);
