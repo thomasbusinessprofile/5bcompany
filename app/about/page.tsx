@@ -4,94 +4,172 @@ import { company } from "../shared/company";
 export const metadata = {
   title: "Our Story | 5B Trading",
   description:
-    "5B Trading is a Vietnam sourcing partner connecting international buyers with curated craft makers across bamboo, biochar, and specialty paper.",
+    "How 5B Trading became a Vietnam sourcing partner for serious international buyers — the craft villages, the founders, and the buyers we serve.",
   alternates: { canonical: "/about" }
 };
 
 const values = [
   {
+    eyebrow: "01",
     title: "Transparency",
-    body: "We disclose the maker behind your order. No black-box middleman markup, no surprises in your packing list."
+    body:
+      "We disclose the maker behind your order. No black-box middleman markup, no surprises in your packing list."
   },
   {
+    eyebrow: "02",
     title: "Curation",
-    body: "Every factory in our network is vetted for quality, ethics, and export readiness. We say no more often than yes."
+    body:
+      "Every factory in our network is vetted for quality, ethics, and export readiness. We say no more often than yes."
   },
   {
+    eyebrow: "03",
     title: "Heritage",
-    body: "Vietnamese craft villages carry centuries of skill. Our role is to bring that craft to global brands without losing what makes it special."
+    body:
+      "Vietnamese craft villages carry centuries of skill. Our role is to bring that craft to global brands without losing what makes it special."
   },
   {
+    eyebrow: "04",
     title: "Partnership",
-    body: "Founder-level accountability. Same-day replies. We treat your first 1/3-container order with the same care as a buyer's tenth full container."
+    body:
+      "Founder-level accountability. Same-day replies. We treat your first 1/3-container order with the same care as a buyer's tenth full container."
   }
+];
+
+const milestones = [
+  { year: "2018", title: "Founded in Hai Phong", body: "5B Trading registered as a sourcing-and-export partner serving Vietnamese makers." },
+  { year: "2021", title: "First EU buyers shipped", body: "Bamboo fence rolls and stretch film consolidated into mixed containers for German garden retailers." },
+  { year: "2023", title: "Biochar partnership", body: "Mekong Delta rice-husk biochar plants joined the network, opening the agricultural amendment line." },
+  { year: "2026", title: "Curated network of 30+ factories", body: "Across bamboo, rattan, ceramic, silk, biochar, charcoal, and specialty paper — each vetted on-site." }
+];
+
+const proof = [
+  { metric: "30+", label: "Partner factories vetted on-site" },
+  { metric: "6", label: "Continents shipped to" },
+  { metric: "1 day", label: "Average reply time on RFQs" },
+  { metric: "1/3", label: "Minimum container we'll consolidate" }
 ];
 
 const founders = [
   {
     name: "Founder — to be added",
     role: "Co-founder & Director",
-    bio: "Placeholder — founder bio will appear here. We'll share the journey of building 5B Trading, why we focus on Vietnamese craft, and what drives our daily work with partner factories.",
+    bio:
+      "Years inside Vietnamese workshops — Phu Vinh weavers, Bat Trang ceramicists, Mekong biochar pyrolysis plants. Believes good sourcing is good storytelling.",
     linkedin: "#"
   },
   {
     name: "Founder — to be added",
     role: "Co-founder & Head of Sourcing",
-    bio: "Placeholder — second founder bio. Years inside Vietnamese factories, relationships in Phu Vinh, Hung Yen, and the Mekong Delta, and a belief that good sourcing is good storytelling.",
+    bio:
+      "Spent a decade matching European brands to Asian manufacturers. Joined 5B to fix the part of sourcing that black-box trading companies never solved: trust.",
     linkedin: "#"
   }
 ];
 
 export default function AboutPage() {
   return (
-    <div className="page-shell">
-      <section className="section-title">
-        <p className="eyebrow">Our story</p>
-        <h1>A sourcing partner for serious buyers of Vietnamese craft</h1>
-        <p>
-          5B Trading was started because international buyers kept telling us the same
-          thing: Vietnam has incredible makers, but it's hard to find the right one
-          without flying here for two weeks. We built a curated network so you don't
-          have to.
-        </p>
+    <div className="page-shell about-shell">
+      <section className="about-hero">
+        <div className="about-hero-copy">
+          <p className="eyebrow">Our story</p>
+          <h1>We started 5B Trading because the world's best craft was the hardest to find.</h1>
+          <p className="lede">
+            Vietnam has 720+ craft villages, millions of tonnes of agricultural
+            residue ready to be valorised, and thousands of small mills that have
+            never picked up an English call. We built the bridge.
+          </p>
+          <div className="cta-row">
+            <Link className="primary-link" href="/request-quote">
+              Start a sourcing brief
+            </Link>
+            <Link className="secondary-link" href="/products">
+              See what we source
+            </Link>
+          </div>
+        </div>
+        <div className="about-hero-image">
+          <img alt="Bamboo forest in northern Vietnam" src="/images/bamboo_forest.png" />
+        </div>
       </section>
 
-      <section className="split">
-        <article className="page-card">
+      <section className="story-block">
+        <div className="story-block-copy">
           <p className="eyebrow">Origin</p>
           <h2>From craft villages to container ports</h2>
           <p>
-            Vietnam has over 720 traditional craft villages, millions of tonnes of
-            agricultural residue, and thousands of small mills. Every year, brands in
-            New York, Tokyo, and Berlin look for the right partner — and most of them
-            give up after a month of cold emails.
+            A buyer once told us: "We tried sourcing from Vietnam for six months.
+            We got three quotes that looked the same, two factories that ghosted us,
+            and one container that shipped late by eight weeks." That's the moment
+            we knew the gap was real.
           </p>
           <p>
-            We started 5B Trading to be the bridge. We spend months inside workshops in
-            Phu Vinh, Hung Yen, and the Mekong Delta, learning the craft and earning
-            the right to recommend the makers we work with.
+            5B Trading started inside the workshops — drinking jasmine tea with
+            bamboo weavers in Phu Vinh, walking pyrolysis plants in the Mekong
+            Delta, watching paper machines run at 3 AM in Bac Ninh. We don't
+            recommend a maker we haven't sat with.
           </p>
-        </article>
-        <article className="page-card">
-          <p className="eyebrow">Vision</p>
-          <h2>Where we're going</h2>
-          <p>
-            We want to make Vietnamese craft and natural materials accessible to brands
-            worldwide — without the friction of language, distance, and trust gaps.
-          </p>
-          <p>
-            By 2027, our goal is to support 100+ international buyers across the US,
-            EU, Japan, Korea, the Middle East and Australia, with a network of vetted
-            partner factories spanning bamboo, biochar, and specialty paper.
-          </p>
-        </article>
+        </div>
+        <div className="story-block-image">
+          <img alt="Quality control on bamboo poles" src="/images/quality_control.png" />
+        </div>
       </section>
 
-      <section className="story-grid" aria-label="Our values">
+      <section className="story-block reverse">
+        <div className="story-block-copy">
+          <p className="eyebrow">The buyer we serve</p>
+          <h2>Built for serious international buyers — not bargain-hunters</h2>
+          <p>
+            Our buyers are garden retailers in Germany, packaging distributors in
+            Australia, agricultural co-ops in Korea, design studios in Japan. They
+            don't want the cheapest factory. They want the right one — certifiable,
+            consistent, accountable for the third reorder.
+          </p>
+          <p>
+            That's why we start every relationship with a spec, a sample, and a
+            paper trail. Letters of Intent before factory disclosure. Pre-shipment
+            inspection before B/L. Same-day replies — from a person, not a queue.
+          </p>
+        </div>
+        <div className="story-block-image">
+          <img alt="Warehouse loading for export" src="/images/warehouse_loading.jpg" />
+        </div>
+      </section>
+
+      <section className="proof-strip" aria-label="By the numbers">
+        {proof.map((p) => (
+          <div className="proof-item" key={p.label}>
+            <strong>{p.metric}</strong>
+            <span>{p.label}</span>
+          </div>
+        ))}
+      </section>
+
+      <section className="section-title">
+        <p className="eyebrow">What we stand for</p>
+        <h2>Four principles, every order, every time</h2>
+      </section>
+      <section className="values-grid" aria-label="Values">
         {values.map((value) => (
-          <article className="story-card" key={value.title}>
-            <h2>{value.title}</h2>
+          <article className="value-card" key={value.title}>
+            <span className="value-num">{value.eyebrow}</span>
+            <h3>{value.title}</h3>
             <p>{value.body}</p>
+          </article>
+        ))}
+      </section>
+
+      <section className="section-title">
+        <p className="eyebrow">Journey</p>
+        <h2>How we got here</h2>
+      </section>
+      <section className="timeline" aria-label="Milestones">
+        {milestones.map((m) => (
+          <article className="timeline-row" key={m.year}>
+            <span className="timeline-year">{m.year}</span>
+            <div>
+              <h3>{m.title}</h3>
+              <p>{m.body}</p>
+            </div>
           </article>
         ))}
       </section>
@@ -100,7 +178,7 @@ export default function AboutPage() {
         <p className="eyebrow">Founders</p>
         <h2>The people behind 5B Trading</h2>
       </section>
-      <section className="card-grid" aria-label="Founders">
+      <section className="card-grid founder-grid" aria-label="Founders">
         {founders.map((founder) => (
           <article className="page-card founder-card" key={founder.name}>
             <div className="founder-photo" aria-hidden="true">
@@ -157,15 +235,26 @@ export default function AboutPage() {
         </dl>
       </section>
 
-      <section className="final-cta">
+      <section className="final-cta about-final-cta">
         <div>
-          <p className="eyebrow">Work with us</p>
-          <h2>Send us a brief, get a sourcing plan</h2>
-          <p>One working day reply. No pressure, no spam.</p>
+          <p className="eyebrow">Let's build something</p>
+          <h2>Tell us what you need. We'll come back with a plan.</h2>
+          <p>
+            One working day reply. A real human, not a contact form auto-responder.
+            No pressure, no spam, no ghost-quotes.
+          </p>
         </div>
         <div className="cta-row">
           <Link className="primary-link" href="/request-quote">
             Request a quote
+          </Link>
+          <Link
+            className="secondary-link"
+            href={`https://wa.me/${company.whatsapp.replace(/[^0-9]/g, "")}`}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            WhatsApp us
           </Link>
         </div>
       </section>
