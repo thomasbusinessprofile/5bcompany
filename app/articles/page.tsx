@@ -60,7 +60,7 @@ export default async function ArticlesPage({ searchParams }: ArticlesPageProps) 
           <Link className="product-card" href={`/articles/${article.slug}`} key={article.slug}>
             {article.image ? (
               <div className="product-card-image">
-                <img alt={article.title} src={article.image} />
+                <img alt={article.imageAlt ?? article.title} src={article.image} />
               </div>
             ) : null}
             <div className="product-card-content">

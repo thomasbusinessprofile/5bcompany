@@ -683,6 +683,7 @@ export type ArticleMeta = {
   updatedAt?: string;
   category: string;
   image?: string;
+  imageAlt?: string;
 };
 
 export const ARTICLE_CATEGORIES = [
@@ -697,106 +698,127 @@ export const articleMeta: Record<string, ArticleMeta> = {
   "how-to-source-bamboo-fence-from-vietnam": {
     publishedAt: "2025-11-04",
     category: "Sourcing guides",
-    image: "/images/article-bamboo-fence.jpg"
+    image: "/images/01-how-to-source-bamboo-fence-from-vietnam.jpg",
+    imageAlt: "Vietnam bamboo fence rolls and panels displayed with export packing checklist for sourcing buyers"
   },
   "stretch-film-sourcing-checklist": {
     publishedAt: "2025-11-12",
     category: "Sourcing guides",
-    image: "/images/article-stretch-film.jpg"
+    image: "/images/02-stretch-film-sourcing-checklist-vietnam-buyers.jpg",
+    imageAlt: "Stretch film rolls and packaging tape inspected on a sourcing desk in a Vietnam warehouse"
   },
   "vietnam-vs-china-bamboo-sourcing": {
     publishedAt: "2025-12-02",
     category: "Market insights",
-    image: "/images/article-vietnam-vs-china.jpg"
+    image: "/images/03-vietnam-vs-china-bamboo-sourcing-2026.jpg",
+    imageAlt: "Side by side Vietnam and China bamboo sourcing comparison with bamboo products and export packing"
   },
   "mekong-delta-biochar-export-guide": {
     publishedAt: "2025-12-09",
     category: "Materials & craft",
-    image: "/images/article-mekong-biochar.jpg"
+    image: "/images/04-mekong-delta-biochar-carbon-sink.jpg",
+    imageAlt: "Biochar, rice husk and charcoal materials shown beside a Mekong Delta rice field for soil amendment sourcing"
   },
   "vietnam-craft-villages-buyer-map": {
     publishedAt: "2025-12-15",
     category: "Materials & craft",
-    image: "/images/article-craft-villages.jpg"
+    image: "/images/05-vietnam-craft-village-map-real-makers.jpg",
+    imageAlt: "Vietnam craft village map with bamboo, rattan, ceramic and handmade product examples for sourcing buyers"
   },
   "evfta-vietnam-eu-tariff-advantages": {
     publishedAt: "2026-01-08",
     category: "Trade & logistics",
-    image: "/images/article-evfta.jpg"
+    image: "/images/06-evfta-2026-eu-buyers-vietnam-sourcing.jpg",
+    imageAlt: "Vietnam and European Union flags at a shipping port with bamboo products and export compliance documents"
   },
   "china-plus-one-vietnam-2026": {
     publishedAt: "2026-01-15",
     category: "Market insights",
-    image: "/images/article-china-plus-one.jpg"
+    image: "/images/07-why-vietnam-wins-china-plus-one-sourcing.jpg",
+    imageAlt: "Vietnam sourcing map and container ship showing China plus one trade routes for global buyers"
   },
   "haiphong-vs-hcmc-port-export-guide": {
     publishedAt: "2026-01-22",
     category: "Trade & logistics",
-    image: "/images/article-ports.jpg"
+    image: "/images/08-hai-phong-vs-ho-chi-minh-city-port-shipping.jpg",
+    imageAlt: "Comparison of northern and southern Vietnam ports with container ships for export route selection"
   },
   "csrd-eu-due-diligence-vietnam": {
     publishedAt: "2026-02-04",
     category: "Compliance",
-    image: "/images/article-csrd.jpg"
+    image: "/images/09-csrd-vietnam-supply-chain-documentation-checklist.jpg",
+    imageAlt: "Vietnam supply chain documentation checklist with bamboo products, compliance forms and sourcing desk setup"
   },
   "bamboo-charcoal-buyer-grades": {
     publishedAt: "2026-02-12",
     category: "Materials & craft",
-    image: "/images/article-charcoal-grades.jpg"
+    image: "/images/10-bamboo-charcoal-bbq-activated-specialty-grades.jpg",
+    imageAlt: "Bamboo charcoal grades displayed as lump charcoal, powder, briquettes and retail export packs"
   },
   "rattan-furniture-vietnam-vs-indonesia": {
     publishedAt: "2026-02-20",
     category: "Market insights",
-    image: "/images/article-rattan-vs-indonesia.jpg"
+    image: "/images/11-rattan-furniture-vietnam-vs-indonesia-2026.jpg",
+    imageAlt: "Vietnam and Indonesia rattan furniture comparison with lounge chairs and workshop materials"
   },
   "bao-loc-silk-export-guide": {
     publishedAt: "2026-03-03",
     category: "Materials & craft",
-    image: "/images/article-bao-loc-silk.jpg"
+    image: "/images/12-bao-loc-silk-buyer-guide-vietnam-mulberry.jpg",
+    imageAlt: "Bao Loc silk cocoons, mulberry leaves and silk fabric arranged in a Vietnamese textile workshop"
   },
   "bat-trang-ceramic-export-buyers": {
     publishedAt: "2026-03-10",
     category: "Materials & craft",
-    image: "/images/article-bat-trang-ceramic.jpg"
+    image: "/images/13-bat-trang-ceramics-vietnam-pottery-buyers-guide.jpg",
+    imageAlt: "Vietnamese artisan shaping Bat Trang ceramic pottery with finished bowls and vases for export sourcing"
   },
   "pre-shipment-inspection-vietnam-buyers": {
     publishedAt: "2026-03-18",
     category: "Compliance",
-    image: "/images/article-psi-inspection.jpg"
+    image: "/images/14-pre-shipment-inspection-vietnam-what-to-specify.jpg",
+    imageAlt: "Pre shipment inspection of bamboo products and export cartons in a Vietnam warehouse before container loading"
   },
   "vietnam-specialty-paper-export-guide": {
     publishedAt: "2026-03-25",
     category: "Materials & craft",
-    image: "/images/article-specialty-paper.jpg"
+    image: "/images/15-vietnam-specialty-paper-kraft-ivory-food-grade.jpg",
+    imageAlt: "Kraft paper, ivory board, food grade cups and paper packaging samples with bamboo accents"
   },
   "small-buyer-container-consolidation-vietnam": {
     publishedAt: "2026-04-02",
     category: "Trade & logistics",
-    image: "/images/warehouse_loading.jpg"
+    image: "/images/16-small-volume-sourcing-vietnam-container-consolidation.jpg",
+    imageAlt: "Container consolidation in Vietnam with mixed supplier cartons, bamboo goods and forklift loading pallets"
   },
   "bamboo-packaging-post-plastic-case": {
     publishedAt: "2026-04-10",
     category: "Materials & craft",
-    image: "/images/bamboo_forest.png"
+    image: "/images/17-bamboo-packaging-material-post-plastic-buyer-case.jpg",
+    imageAlt: "Eco friendly bamboo packaging products including trays, cups, utensils and molded fiber boxes"
   },
   "letter-of-credit-vs-tt-vietnam-payment": {
     publishedAt: "2026-04-18",
     category: "Trade & logistics",
-    image: "/images/warehouse_loading.jpg"
+    image: "/images/18-lc-vs-tt-vietnam-imports-payment-terms.jpg",
+    imageAlt: "Letter of credit and telegraphic transfer payment terms shown with Vietnam import documents and calculator"
   },
   "rcep-vietnam-japan-korea-australia": {
     publishedAt: "2026-04-26",
     category: "Trade & logistics",
-    image: "/images/warehouse_loading.jpg"
+    image: "/images/19-rcep-vietnam-tariff-edge-asian-australian-buyers.jpg",
+    imageAlt: "Vietnam RCEP trade routes to Japan Korea ASEAN and Australia with bamboo exports and shipping port"
   },
   "vietnam-quality-myth-buyer-reality": {
     publishedAt: "2026-05-04",
     category: "Sourcing guides",
-    image: "/images/quality_control.png"
+    image: "/images/20-vietnam-quality-myth-buyer-reality-check.jpg",
+    imageAlt: "Quality inspection of bamboo mats in a Vietnam factory showing approved and rejected product samples"
   },
   "vietnam-export-outlook-2026": {
     publishedAt: "2026-05-12",
     category: "Market insights",
-    image: "/images/bamboo_forest.png"
+    image: "/images/21-vietnam-export-outlook-2026-buyers-focus.jpg",
+    imageAlt: "Vietnam export outlook with container ship, city skyline, bamboo products, packaging rolls and charcoal for global sourcing growth"
   }
 };

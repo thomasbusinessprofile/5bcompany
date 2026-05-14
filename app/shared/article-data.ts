@@ -15,6 +15,7 @@ export type Article = {
   updatedAt?: string;
   category?: string;
   image?: string;
+  imageAlt?: string;
 };
 
 import { articleMeta, seedArticles } from "./article-seed";
