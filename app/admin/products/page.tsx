@@ -1,5 +1,6 @@
 import { deleteProduct, saveProduct } from "./actions";
 import { getProductCmsData } from "../../shared/product-cms-data";
+import { ImageUploader } from "../shared/ImageUploader";
 
 export const dynamic = "force-dynamic";
 
@@ -108,21 +109,16 @@ export default async function AdminProductsPage({ searchParams }: AdminProductsP
             <textarea defaultValue={editing?.longDescription ?? ""} name="long_description" rows={5} />
           </label>
           <label>
-            Images (one URL per line, e.g. /images/bamboo_fence.jpg)
-            <textarea
+            Images
+            <ImageUploader
               defaultValue={editing?.images.join("\n") ?? ""}
-              name="images"
-              placeholder="/images/your-product.jpg"
+              fieldName="images"
+              folder="products"
+              multiple
+              placeholder="Upload product photos or paste URLs (one per line)"
               rows={3}
             />
           </label>
-          {editing && editing.images.length > 0 ? (
-            <div className="image-preview-row">
-              {editing.images.map((url) => (
-                <img alt="" key={url} src={url} />
-              ))}
-            </div>
-          ) : null}
           <label>
             Specifications (one item per line or comma-separated)
             <textarea
