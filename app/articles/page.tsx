@@ -8,6 +8,10 @@ export const metadata = {
   alternates: { canonical: "/articles" }
 };
 
+// Re-fetch from Supabase at most once a minute so CMS edits (new posts,
+// updated hero images, status changes) propagate without a redeploy.
+export const revalidate = 60;
+
 type ArticlesPageProps = {
   searchParams: Promise<{ category?: string }>;
 };

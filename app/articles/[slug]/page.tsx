@@ -11,6 +11,8 @@ type ArticlePageProps = {
 
 const DEFAULT_OG_IMAGE = "/images/bamboo_forest.png";
 
+export const revalidate = 60;
+
 export async function generateStaticParams() {
   const articles = await getPublicArticles();
   return articles.map((article) => ({ slug: article.slug }));
