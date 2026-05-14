@@ -12,6 +12,7 @@ import { canAccessAdminArea } from "./roles";
 // global error boundary never trips on a routine auth failure.
 export async function requireAdminRole(supabase: SupabaseClient) {
   let userId: string | undefined;
+  let profileId: string | null | undefined;
   let role: string | null | undefined;
   try {
     const userRes = await supabase.auth.getUser();
@@ -21,9 +22,10 @@ export async function requireAdminRole(supabase: SupabaseClient) {
 
     const profileRes = await supabase
       .from("profiles")
-      .select("role")
+      .select("id, role")
       .eq("user_id", user.id)
       .maybeSingle();
+    profileId = profileRes.data?.id ?? null;
     role = profileRes.data?.role ?? null;
   } catch (err) {
     if (err && typeof err === "object" && "digest" in err) throw err;
@@ -34,5 +36,9 @@ export async function requireAdminRole(supabase: SupabaseClient) {
     redirect("/login?status=unauthorized");
   }
 
-  return { userId: userId as string, role: role as string };
+  return {
+    userId: userId as string,
+    profileId: profileId as string | null,
+    role: role as string
+  };
 }
