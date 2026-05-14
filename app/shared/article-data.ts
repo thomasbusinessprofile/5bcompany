@@ -11,11 +11,18 @@ export type Article = {
   slug: string;
   status: string;
   title: string;
+  publishedAt?: string;
+  updatedAt?: string;
+  category?: string;
+  image?: string;
 };
 
-import { seedArticles } from "./article-seed";
+import { articleMeta, seedArticles } from "./article-seed";
 
-const fallbackArticles: Article[] = seedArticles;
+const fallbackArticles: Article[] = seedArticles.map((a) => ({
+  ...a,
+  ...(articleMeta[a.slug] ?? {})
+}));
 
 type ArticleRow = {
   body: string | null;
