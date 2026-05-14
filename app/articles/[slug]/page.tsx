@@ -129,7 +129,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
         {article.image ? (
           <div className="article-hero">
-            <img alt={article.title} src={article.image} />
+            <img alt={article.imageAlt ?? article.title} src={article.image} />
           </div>
         ) : null}
 
@@ -153,7 +153,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               <Link className="product-card" href={`/articles/${r.slug}`} key={r.slug}>
                 {r.image ? (
                   <div className="product-card-image">
-                    <img alt={r.title} src={r.image} />
+                    <img alt={r.imageAlt ?? r.title} src={r.image} />
                   </div>
                 ) : null}
                 <div className="product-card-content">
