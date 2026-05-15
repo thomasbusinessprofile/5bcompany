@@ -45,10 +45,8 @@ export const adminVi: Record<string, string> = {
   // ─── Common labels ───────────────────────────────────────────────────
   "Name": "Tên",
   "Full name": "Họ và tên",
-  "Email": "Email",
   "Work email": "Email công việc",
   "Phone": "Điện thoại",
-  "WhatsApp": "WhatsApp",
   "Company": "Công ty",
   "Country": "Quốc gia",
   "Website": "Website",
