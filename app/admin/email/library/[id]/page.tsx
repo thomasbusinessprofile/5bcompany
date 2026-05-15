@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CopyButton } from "../CopyButton";
+import { CopyButton } from "../../CopyButton";
 import { findLibraryTemplate } from "../../../../lib/email/library";
 
 export const dynamic = "force-dynamic";
