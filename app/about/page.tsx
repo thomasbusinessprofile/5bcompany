@@ -55,6 +55,7 @@ const founders = [
     role: "Co-founder & Director",
     bio:
       "Years inside Vietnamese workshops — Phu Vinh weavers, Bat Trang ceramicists, Mekong biochar pyrolysis plants. Believes good sourcing is good storytelling.",
+    image: "/images/founder-1.jpg",
     linkedin: "#"
   },
   {
@@ -62,6 +63,7 @@ const founders = [
     role: "Co-founder & Head of Sourcing",
     bio:
       "Spent a decade matching European brands to Asian manufacturers. Joined 5B to fix the part of sourcing that black-box trading companies never solved: trust.",
+    image: "/images/founder-2.jpg",
     linkedin: "#"
   }
 ];
@@ -181,8 +183,12 @@ export default function AboutPage() {
       <section className="card-grid founder-grid" aria-label="Founders">
         {founders.map((founder) => (
           <article className="page-card founder-card" key={founder.name}>
-            <div className="founder-photo" aria-hidden="true">
-              <span>Photo</span>
+            <div className="founder-photo">
+              {founder.image ? (
+                <img alt={`Portrait of ${founder.name}`} src={founder.image} />
+              ) : (
+                <span aria-hidden="true">Photo</span>
+              )}
             </div>
             <h3>{founder.name}</h3>
             <p className="muted">{founder.role}</p>
