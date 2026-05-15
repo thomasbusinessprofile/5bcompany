@@ -53,7 +53,7 @@ const proof = [
 const founders = [
   {
     name: "Founder — to be added",
-    role: "Co-founder & Director",
+    role: "CEO & Founder",
     bio:
       "Years inside Vietnamese workshops — Phu Vinh weavers, Bat Trang ceramicists, Mekong biochar pyrolysis plants. Believes good sourcing is good storytelling.",
     image: "/images/founder-1.jpg",
@@ -61,7 +61,7 @@ const founders = [
   },
   {
     name: "Founder — to be added",
-    role: "Co-founder & Head of Sourcing",
+    role: "Co-founder",
     bio:
       "Spent a decade matching European brands to Asian manufacturers. Joined 5B to fix the part of sourcing that black-box trading companies never solved: trust.",
     image: "/images/founder-2.jpg",
