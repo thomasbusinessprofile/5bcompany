@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { NavLink } from "../shared/NavLink";
 import { canAccessAdminArea } from "../lib/auth/roles";
+import { tA } from "../lib/i18n";
 import { createSupabaseServerClient } from "../lib/supabase/server";
 
 export const metadata: Metadata = {
@@ -58,7 +59,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       <nav className="admin-subnav" aria-label="Admin sections">
         {adminTabs.map((tab) => (
           <NavLink className="admin-subnav-link" href={tab.href} key={tab.href}>
-            {tab.label}
+            {tA(tab.label)}
           </NavLink>
         ))}
       </nav>
