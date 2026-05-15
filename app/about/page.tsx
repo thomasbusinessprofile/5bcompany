@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { company } from "../shared/company";
+import { FounderPhoto } from "./FounderPhoto";
 
 export const metadata = {
   title: "Our Story | 5B Trading",
@@ -183,13 +184,7 @@ export default function AboutPage() {
       <section className="card-grid founder-grid" aria-label="Founders">
         {founders.map((founder) => (
           <article className="page-card founder-card" key={founder.name}>
-            <div className="founder-photo">
-              {founder.image ? (
-                <img alt={`Portrait of ${founder.name}`} src={founder.image} />
-              ) : (
-                <span aria-hidden="true">Photo</span>
-              )}
-            </div>
+            <FounderPhoto name={founder.name} src={founder.image ?? ""} />
             <h3>{founder.name}</h3>
             <p className="muted">{founder.role}</p>
             <p>{founder.bio}</p>

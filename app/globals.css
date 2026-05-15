@@ -2208,6 +2208,14 @@ main {
   font-weight: 700;
   margin-bottom: 16px;
   overflow: hidden;
+  max-height: 380px;
+}
+.founder-photo-fallback {
+  background: linear-gradient(135deg, var(--green-soft), #ffffff);
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 14px;
+  border: 1px dashed var(--line);
 }
 .founder-photo img {
   width: 100%;
