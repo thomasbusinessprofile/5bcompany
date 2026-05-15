@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { listContacts, listCompanies } from "../../shared/crm-data";
+import { tA } from "../../lib/i18n";
 import { saveContact } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -8,10 +9,10 @@ export const metadata = { title: "Contacts | Admin | 5B Trading", robots: { inde
 type Props = { searchParams: Promise<{ q?: string; status?: string }> };
 
 function flash(status?: string) {
-  if (status === "saved") return { tone: "success", text: "Contact saved." };
-  if (status === "deleted") return { tone: "success", text: "Contact deleted." };
-  if (status === "missing-fields") return { tone: "error", text: "Full name is required." };
-  if (status === "save-error") return { tone: "error", text: "Save failed. Check permissions." };
+  if (status === "saved") return { tone: "success", text: tA("Contact saved.") };
+  if (status === "deleted") return { tone: "success", text: tA("Contact deleted.") };
+  if (status === "missing-fields") return { tone: "error", text: tA("Full name is required.") };
+  if (status === "save-error") return { tone: "error", text: tA("Save failed. Check permissions.") };
   return null;
 }
 
@@ -30,9 +31,9 @@ export default async function AdminContactsPage({ searchParams }: Props) {
   return (
     <div className="page-shell">
       <section className="section-title wide-title">
-        <p className="eyebrow">Contacts</p>
-        <h1>Contacts ({contacts.length})</h1>
-        <p>Every buyer and prospect we have a conversation with. RFQ submissions auto-create a contact via the inquiry trigger.</p>
+        <p className="eyebrow">{tA("Contacts")}</p>
+        <h1>{tA("Contacts")} ({contacts.length})</h1>
+        <p>Mọi khách hàng và prospect mà bạn từng trò chuyện. RFQ tự động tạo liên hệ qua trigger.</p>
       </section>
 
       {message ? <p className={`form-status ${message.tone}`}>{message.text}</p> : null}
@@ -43,35 +44,35 @@ export default async function AdminContactsPage({ searchParams }: Props) {
           <input
             defaultValue={q ?? ""}
             name="q"
-            placeholder="Search name or email…"
+            placeholder={tA("Search name or email…")}
             type="search"
           />
-          <button className="secondary-link" type="submit">Search</button>
-          {q ? <Link className="ghost-link" href="/admin/contacts">Clear</Link> : null}
+          <button className="secondary-link" type="submit">{tA("Search")}</button>
+          {q ? <Link className="ghost-link" href="/admin/contacts">{tA("Clear")}</Link> : null}
         </form>
-        <a className="primary-link" href="#add-contact">+ Add contact</a>
+        <a className="primary-link" href="#add-contact">{tA("+ Add contact")}</a>
       </div>
 
       {/* List — full width, compact rows */}
       <section className="page-card crm-table-card">
         {contacts.length === 0 ? (
           <div className="empty-state">
-            <h2>{q ? "No matches" : "No contacts yet"}</h2>
+            <h2>{q ? tA("No matches") : tA("No contacts yet")}</h2>
             <p>
               {q ? (
-                <Link className="auth-link" href="/admin/contacts">Clear search →</Link>
+                <Link className="auth-link" href="/admin/contacts">{tA("Clear")} →</Link>
               ) : (
-                "RFQ submissions create contacts automatically. Or add one manually below."
+                "RFQ tự động tạo liên hệ. Hoặc thêm thủ công bên dưới."
               )}
             </p>
           </div>
         ) : (
           <div className="crm-table">
             <div className="crm-table-head">
-              <span>Name</span>
-              <span>Company</span>
-              <span>Email</span>
-              <span>Last contact</span>
+              <span>{tA("Name")}</span>
+              <span>{tA("Company")}</span>
+              <span>{tA("Email")}</span>
+              <span>{tA("Last contact")}</span>
             </div>
             {contacts.map((contact) => (
               <Link className="crm-table-row" href={`/admin/contacts/${contact.id}`} key={contact.id}>
@@ -90,24 +91,24 @@ export default async function AdminContactsPage({ searchParams }: Props) {
 
       {/* Add form — collapsed by default to keep list scannable */}
       <details className="crm-add-form" id="add-contact">
-        <summary>+ Add contact manually</summary>
+        <summary>{tA("Add contact manually")}</summary>
         <form action={saveContact} className="page-card request-form">
-          <h2 className="rfq-section-title">New contact</h2>
+          <h2 className="rfq-section-title">{tA("New contact")}</h2>
           <div className="rfq-row">
             <label>
-              Full name *
+              {tA("Full name")} *
               <input name="full_name" placeholder="Anna Lee" required />
             </label>
             <label>
-              Email
+              {tA("Email")}
               <input name="email" placeholder="anna@company.com" type="email" />
             </label>
           </div>
           <div className="rfq-row">
             <label>
-              Company
+              {tA("Company")}
               <select defaultValue="" name="company_id">
-                <option value="">— Unassigned —</option>
+                <option value="">— Chưa gán —</option>
                 {companies.map((c) => (
                   <option key={c.id} value={c.id}>
                     {c.name}{c.country ? ` · ${c.country}` : ""}
@@ -116,29 +117,29 @@ export default async function AdminContactsPage({ searchParams }: Props) {
               </select>
             </label>
             <label>
-              Role / title
+              {tA("Role / title")}
               <input name="role_title" placeholder="Procurement Manager" />
             </label>
           </div>
           <div className="rfq-row">
             <label>
-              Phone
+              {tA("Phone")}
               <input name="phone" placeholder="+49…" />
             </label>
             <label>
-              WhatsApp
+              {tA("WhatsApp")}
               <input name="whatsapp" placeholder="+49…" />
             </label>
           </div>
           <label>
-            Source
+            {tA("Source")}
             <input name="source" placeholder="referral / linkedin / trade show" />
           </label>
           <label>
-            Notes
+            {tA("Notes")}
             <textarea name="notes" rows={3} />
           </label>
-          <button className="primary-link" type="submit">Save contact</button>
+          <button className="primary-link" type="submit">{tA("Save contact")}</button>
         </form>
       </details>
     </div>
